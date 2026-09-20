@@ -22,15 +22,34 @@ export default async function PareaPage() {
   const teamSrc = uploaded ?? teamPhoto.src;
 
   // Uploaded wall photos win; the list in lib/parea.ts is the fallback for
-  // anyone running without a database configured.
-  let wall: { id?: string; src?: string; url?: string; caption: string; name?: string }[] = [];
+  // anyone running without a database configured. Both sources are
+  // normalised to one shape here so the render below has a single type.
+  type WallPhoto = { key: string; src: string; caption: string; name?: string };
+
+  let wall: WallPhoto[] = [];
   try {
-    const parsed = JSON.parse((await getContent("parea_photos")) ?? "[]");
-    if (Array.isArray(parsed)) wall = parsed;
+    const parsed: unknown = JSON.parse((await getContent("parea_photos")) ?? "[]");
+    if (Array.isArray(parsed)) {
+      wall = parsed
+        .filter(
+          (p): p is { id: string; url: string; caption: string; name?: string } =>
+            Boolean(p) && typeof p.url === "string" && typeof p.caption === "string"
+        )
+        .map((p) => ({ key: p.id, src: p.url, caption: p.caption, name: p.name }));
+    }
   } catch {
     wall = [];
   }
-  const photos = wall.length > 0 ? wall : pareaPhotos;
+
+  const photos: WallPhoto[] =
+    wall.length > 0
+      ? wall
+      : pareaPhotos.map((p) => ({
+          key: p.src,
+          src: p.src,
+          caption: p.caption,
+          name: p.name,
+        }));
 
   return (
     <>
@@ -74,17 +93,14 @@ export default async function PareaPage() {
 
           {photos.length > 0 ? (
             <div className="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {photos.map((photo, i) => (
-                <figure
-                  key={photo.id ?? photo.src ?? i}
-                  className="plinth overflow-hidden rounded-sm bg-white"
-                >
+              {photos.map((photo) => (
+                <figure key={photo.key} className="plinth overflow-hidden rounded-sm bg-white">
                   {/* Plain <img>: uploaded photos live on a Supabase URL
                       chosen at runtime, so next/image would need remote-host
                       config for no real gain here. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={photo.url ?? photo.src}
+                    src={photo.src}
                     alt={photo.name ? `${photo.name} at Yianni's` : "A regular at Yianni's"}
                     className="aspect-square w-full object-cover"
                   />
