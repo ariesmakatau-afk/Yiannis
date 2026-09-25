@@ -23,9 +23,9 @@ export default function PlaceholderImage({
     <div
       role="img"
       aria-label={`Placeholder: ${label} — photo pending`}
-      className={`marble-surface flex items-center justify-center rounded-sm border border-dashed border-cobalt/25 ${aspectClass[aspect]} ${className}`}
+      className={`veil-clay flex items-center justify-center rounded-sm border border-dashed border-ember/25 ${aspectClass[aspect]} ${className}`}
     >
-      <span className="px-4 text-center text-xs font-medium uppercase tracking-[0.12em] text-cobalt-dark/45">
+      <span className="px-4 text-center text-xs font-medium uppercase tracking-[0.12em] text-ember-dark/45">
         Photo: {label} — pending
       </span>
     </div>

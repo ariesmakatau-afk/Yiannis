@@ -112,7 +112,7 @@ export default function OrderFlow() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackEvent({ name: "order_online_click", path: "uber_eats" })}
-          className="flex flex-col justify-between border border-cobalt/15 bg-white p-6 transition-colors hover:border-cobalt"
+          className="flex flex-col justify-between border border-ember/15 bg-white p-6 transition-colors hover:border-ember"
         >
           <div>
             <p className="font-display text-xl font-semibold">Order via Uber Eats</p>
@@ -121,7 +121,7 @@ export default function OrderFlow() {
               over there.
             </p>
           </div>
-          <span className="mt-6 text-sm font-semibold text-cobalt">Opens Uber Eats ↗</span>
+          <span className="mt-6 text-sm font-semibold text-ember">Opens Uber Eats ↗</span>
         </a>
 
         <button
@@ -131,7 +131,7 @@ export default function OrderFlow() {
             goToStep("build");
             trackEvent({ name: "order_online_click", path: "pickup" });
           }}
-          className="flex flex-col justify-between border border-cobalt/15 bg-white p-6 text-left transition-colors hover:border-cobalt"
+          className="flex flex-col justify-between border border-ember/15 bg-white p-6 text-left transition-colors hover:border-ember"
         >
           <div>
             <p className="font-display text-xl font-semibold">Order for Pickup</p>
@@ -140,7 +140,7 @@ export default function OrderFlow() {
               you collect it. No online payment.
             </p>
           </div>
-          <span className="mt-6 text-sm font-semibold text-cobalt">Start your order →</span>
+          <span className="mt-6 text-sm font-semibold text-ember">Start your order →</span>
         </button>
       </div>
     );
@@ -149,14 +149,14 @@ export default function OrderFlow() {
   // ---- Step 4: confirmation ----------------------------------------------
   if (step === "sent") {
     return (
-      <div className="border border-cobalt/15 bg-white p-8 text-center">
+      <div className="border border-ember/15 bg-white p-8 text-center">
         <p className="font-display text-2xl font-semibold">Order sent!</p>
         <p className="mt-3 text-ink/70">
           We&rsquo;ve got your order — pay in-store when you pick it up.
         </p>
         {orderId && (
           <>
-            <a href={`/order/status/${orderId}`} className="btn-orb-blue mt-6 inline-block">
+            <a href={`/order/status/${orderId}`} className="btn-ember mt-6 inline-block">
               Check your wait time
             </a>
             <p className="mt-3 text-sm text-ink/55">
@@ -167,7 +167,7 @@ export default function OrderFlow() {
         )}
         <p className="mt-6 text-sm text-ink/50">
           Running early or late? Call us on{" "}
-          <a href={business.phoneHref} className="font-semibold text-cobalt">
+          <a href={business.phoneHref} className="font-semibold text-ember">
             {business.phone}
           </a>
           .
@@ -179,11 +179,11 @@ export default function OrderFlow() {
   // ---- Step 3: customer details ------------------------------------------
   if (step === "details") {
     return (
-      <div className="border border-cobalt/15 bg-white p-6 sm:p-8">
+      <div className="border border-ember/15 bg-white p-6 sm:p-8">
         <button
           type="button"
           onClick={() => goToStep("build")}
-          className="text-sm font-semibold text-cobalt"
+          className="text-sm font-semibold text-ember"
         >
           ← Back to your order
         </button>
@@ -277,7 +277,7 @@ export default function OrderFlow() {
           <button
             type="submit"
             disabled={submitting}
-            className="btn-orb-blue w-full disabled:opacity-60"
+            className="btn-ember w-full disabled:opacity-60"
           >
             {submitting ? "Sending order…" : "Send Order"}
           </button>
@@ -293,7 +293,7 @@ export default function OrderFlow() {
         <div className="space-y-10">
           {orderableGroups.map((group) => (
             <section key={group.id}>
-              <h2 className="font-display text-lg font-semibold text-cobalt-dark">
+              <h2 className="font-display text-lg font-semibold text-ember-dark">
                 {group.title}
               </h2>
               {group.blurb && <p className="mt-1 text-sm text-ink/55">{group.blurb}</p>}
@@ -311,22 +311,22 @@ export default function OrderFlow() {
                       onClick={() => setCustomising(product)}
                       className={`flex flex-col items-start rounded-sm border bg-white p-4 text-left transition-all duration-200 ${
                         added
-                          ? "added-flash border-cobalt ring-2 ring-cobalt/25"
-                          : "border-cobalt/15 hover:border-cobalt hover:shadow-md"
+                          ? "added-flash border-ember ring-2 ring-ember/25"
+                          : "border-ember/15 hover:border-ember hover:shadow-md"
                       }`}
                     >
                       <div className="flex w-full items-start justify-between gap-3">
-                        <p className="font-display text-base font-semibold text-cobalt-dark">
+                        <p className="font-display text-base font-semibold text-ember-dark">
                           {product.name}
                         </p>
-                        <p className="shrink-0 text-sm font-semibold text-cobalt">{from}</p>
+                        <p className="shrink-0 text-sm font-semibold text-ember">{from}</p>
                       </div>
                       {product.description && (
                         <p className="mt-1 text-sm text-ink/55">{product.description}</p>
                       )}
                       <span
                         className={`mt-3 text-sm font-semibold transition-colors ${
-                          added ? "text-cobalt" : "text-ink/45"
+                          added ? "text-ember" : "text-ink/45"
                         }`}
                       >
                         {added ? "✓ Added to your order" : "Choose options →"}
@@ -340,13 +340,13 @@ export default function OrderFlow() {
         </div>
 
         {/* Order summary */}
-        <aside className="h-fit border border-cobalt/15 bg-white p-5 lg:sticky lg:top-24">
+        <aside className="h-fit border border-ember/15 bg-white p-5 lg:sticky lg:top-24">
           <div className="flex items-center justify-between gap-3">
             <p className="font-display text-lg font-semibold">Your Order</p>
             {totalItems > 0 && (
               <span
                 key={cartPulse}
-                className="cart-bump flex h-7 min-w-7 items-center justify-center rounded-full bg-cobalt px-2 text-sm font-semibold text-white"
+                className="cart-bump flex h-7 min-w-7 items-center justify-center rounded-full bg-ember px-2 text-sm font-semibold text-white"
               >
                 {totalItems}
               </span>
@@ -361,10 +361,10 @@ export default function OrderFlow() {
             <>
               <ul className="mt-4 space-y-4">
                 {cart.map((line) => (
-                  <li key={line.key} className="border-b border-cobalt/10 pb-4 last:border-0">
+                  <li key={line.key} className="border-b border-ember/10 pb-4 last:border-0">
                     <div className="flex items-start justify-between gap-2">
                       <p className="text-sm font-semibold">{line.name}</p>
-                      <p className="shrink-0 text-sm font-semibold text-cobalt">
+                      <p className="shrink-0 text-sm font-semibold text-ember">
                         {formatMoney(line.unitPrice * line.quantity)}
                       </p>
                     </div>
@@ -394,9 +394,9 @@ export default function OrderFlow() {
                 ))}
               </ul>
 
-              <div className="mt-4 flex items-center justify-between border-t border-cobalt/15 pt-4">
+              <div className="mt-4 flex items-center justify-between border-t border-ember/15 pt-4">
                 <span className="text-sm font-semibold">Estimated total</span>
-                <span className="font-display text-lg font-semibold text-cobalt-dark">
+                <span className="font-display text-lg font-semibold text-ember-dark">
                   {formatMoney(estimatedTotal)}
                 </span>
               </div>
@@ -407,7 +407,7 @@ export default function OrderFlow() {
             type="button"
             disabled={cart.length === 0}
             onClick={() => goToStep("details")}
-            className="btn-orb-blue mt-5 w-full disabled:opacity-40"
+            className="btn-ember mt-5 w-full disabled:opacity-40"
           >
             Continue
           </button>

@@ -12,7 +12,7 @@ export default function LocationIdentifier({ variant = "light", className = "" }
   const isDark = variant === "dark";
   return (
     <div
-      className={`border-l-2 border-cobalt py-3 pl-4 ${
+      className={`border-l-2 border-ember py-3 pl-4 ${
         isDark ? "text-white" : "text-ink"
       } ${className}`}
     >

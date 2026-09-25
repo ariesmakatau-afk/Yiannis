@@ -32,9 +32,9 @@ export default function StaffLogin({ next }: { next: string }) {
   }
 
   return (
-    <div className="carved-panel w-full max-w-sm p-7">
-      <p className="eyebrow-brass">Staff only</p>
-      <h1 className="mt-3 font-display text-2xl font-semibold text-cobalt-dark">Sign in</h1>
+    <div className="linen-card w-full max-w-sm p-7">
+      <p className="eyebrow-sun">Staff only</p>
+      <h1 className="mt-3 font-display text-2xl font-semibold text-ember-dark">Sign in</h1>
       <p className="mt-2 text-sm text-ink/60">
         For the kitchen screen and photo uploads.
       </p>
@@ -61,7 +61,7 @@ export default function StaffLogin({ next }: { next: string }) {
           </p>
         )}
 
-        <button type="submit" disabled={busy} className="btn-orb-blue w-full disabled:opacity-60">
+        <button type="submit" disabled={busy} className="btn-ember w-full disabled:opacity-60">
           {busy ? "Signing in…" : "Sign in"}
         </button>
       </form>

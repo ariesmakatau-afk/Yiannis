@@ -17,7 +17,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-cobalt/10 bg-sand/90 backdrop-blur-md">
+    <header className="header-glass sticky top-0 z-40">
       <div className="container-page flex h-[72px] items-center justify-between gap-4">
         {/* The medallion is square, so it gets a square box — the old header
             squeezed a 815x478 wide mark into h-10 w-10, which distorted it. */}
@@ -27,14 +27,14 @@ export default function Header() {
             alt=""
             width={512}
             height={512}
-            className="h-12 w-12 shrink-0 rounded-full shadow-[0_6px_14px_-8px_rgba(28,56,80,0.6)]"
+            className="h-12 w-12 shrink-0 rounded-full shadow-[0_6px_14px_-8px_rgba(59,29,20,0.6)]"
             priority
           />
           <span className="min-w-0 leading-none">
-            <span className="block truncate font-display text-[19px] font-semibold tracking-tight text-cobalt-dark">
+            <span className="block truncate font-display text-[19px] font-semibold tracking-tight text-ember-dark">
               Yianni&rsquo;s
             </span>
-            <span className="mt-1 block truncate font-body text-[10px] font-light uppercase tracking-[0.18em] text-cobalt/70">
+            <span className="mt-1 block truncate font-body text-[10px] font-light uppercase tracking-[0.18em] text-ember/70">
               Hellenic Yiros
             </span>
           </span>
@@ -46,7 +46,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-normal tracking-wide text-cobalt-dark/75 transition-colors hover:text-cobalt"
+              className="text-sm font-normal tracking-wide text-ember-dark/75 transition-colors hover:text-ember"
             >
               {link.label}
             </Link>
@@ -54,14 +54,14 @@ export default function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <Link href="/order" className="btn-orb-blue !px-6 !py-3">
+          <Link href="/order" className="btn-ember !px-6 !py-3">
             Order Online
           </Link>
         </div>
 
         <button
           type="button"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-cobalt-dark transition-colors hover:bg-cobalt/5 lg:hidden"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ember-dark transition-colors hover:bg-ember/5 lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -87,10 +87,10 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu — marble panel with meander trim, per the theme */}
+      {/* Mobile menu — opens onto the view: sky, sea and hills along its foot */}
       {open && (
-        <nav id="mobile-menu" aria-label="Mobile" className="menu-panel lg:hidden">
-          <div className="meander-divider-navy opacity-25" aria-hidden="true" />
+        <nav id="mobile-menu" aria-label="Mobile" className="menu-panel menu-panel--scene lg:hidden">
+          <div className="wave-divider-ember opacity-25" aria-hidden="true" />
           <div className="container-page pb-6 pt-3">
             <ul className="flex flex-col">
               {primaryLinks.map((link) => (
@@ -103,7 +103,7 @@ export default function Header() {
                     <span className="font-display text-lg font-semibold tracking-tight">
                       {link.label}
                     </span>
-                    <span aria-hidden="true" className="text-cobalt/35">
+                    <span aria-hidden="true" className="text-ember/35">
                       &rarr;
                     </span>
                   </Link>
@@ -114,7 +114,7 @@ export default function Header() {
                   <span className="font-display text-lg font-semibold tracking-tight">
                     Call {business.phone}
                   </span>
-                  <span aria-hidden="true" className="text-cobalt/35">
+                  <span aria-hidden="true" className="text-ember/35">
                     &rarr;
                   </span>
                 </a>
@@ -123,7 +123,7 @@ export default function Header() {
             <Link
               href="/order"
               onClick={() => setOpen(false)}
-              className="btn-orb-blue mt-5 w-full"
+              className="btn-ember mt-5 w-full"
             >
               Order Online
             </Link>

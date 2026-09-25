@@ -56,7 +56,7 @@ export default function BottomNav() {
         type="button"
         onClick={() => setDismissed(false)}
         aria-label="Show quick actions"
-        className="menu-panel fixed bottom-0 right-4 z-40 rounded-t-lg border border-b-0 border-cobalt/15 px-3 py-1.5 text-cobalt-dark shadow-lg md:hidden"
+        className="menu-panel fixed bottom-0 right-4 z-40 rounded-t-lg border border-b-0 border-ember/15 px-3 py-1.5 text-ember-dark shadow-lg md:hidden"
         style={{ marginBottom: "env(safe-area-inset-bottom)" }}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -75,7 +75,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="Quick actions"
-      className={`fixed inset-x-3 bottom-3 z-40 flex items-center gap-1 rounded-full border border-cobalt/15 bg-white/95 p-1 shadow-[0_8px_24px_-8px_rgba(28,56,80,0.45)] backdrop-blur-md transition-transform duration-300 md:hidden ${
+      className={`fixed inset-x-3 bottom-3 z-40 flex items-center gap-1 quick-dock rounded-full p-1 transition-transform duration-300 md:hidden ${
         hidden ? "translate-y-[150%]" : "translate-y-0"
       }`}
       style={{ marginBottom: "env(safe-area-inset-bottom)" }}
@@ -83,7 +83,7 @@ export default function BottomNav() {
       <Link
         href="/menu"
         onClick={() => trackEvent({ name: "menu_page_view" })}
-        className="flex flex-1 items-center justify-center gap-1.5 rounded-full py-2.5 text-xs font-semibold text-cobalt-dark transition-colors active:bg-cobalt/10"
+        className="flex flex-1 items-center justify-center gap-1.5 rounded-full py-2.5 text-xs font-semibold text-ember-dark transition-colors active:bg-ember/10"
       >
         <IconMenu />
         Menu
@@ -91,7 +91,7 @@ export default function BottomNav() {
 
       <Link
         href="/order"
-        className="flex flex-[1.3] items-center justify-center gap-1.5 rounded-full bg-cobalt py-2.5 text-xs font-semibold text-white transition-transform active:scale-95"
+        className="flex flex-[1.3] items-center justify-center gap-1.5 btn-ember !rounded-full !px-0 !py-2.5 text-xs"
       >
         <IconBag />
         Order
@@ -102,7 +102,7 @@ export default function BottomNav() {
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackEvent({ name: "get_directions_click" })}
-        className="flex flex-1 items-center justify-center gap-1.5 rounded-full py-2.5 text-xs font-semibold text-cobalt-dark transition-colors active:bg-cobalt/10"
+        className="flex flex-1 items-center justify-center gap-1.5 rounded-full py-2.5 text-xs font-semibold text-ember-dark transition-colors active:bg-ember/10"
       >
         <IconPin />
         Directions

@@ -20,7 +20,7 @@ export default function MapEmbed({
 
   return (
     <div
-      className={`carved-panel overflow-hidden ${className}`}
+      className={`linen-card overflow-hidden ${className}`}
       style={{ minHeight }}
     >
       <iframe

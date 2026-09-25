@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LocationIdentifier from "@/components/LocationIdentifier";
-import Rosette from "@/components/ornament/Rosette";
+import VerginaSun from "@/components/ornament/VerginaSun";
 import {
   extras,
   formatMoney,
@@ -27,15 +27,15 @@ const drinkGroups = menuGroups.filter((g) => DRINK_GROUP_IDS.includes(g.id));
 export default function MenuPage() {
   return (
     <div className="container-page relative py-10 sm:py-14">
-      <Rosette
-        className="pointer-events-none absolute -right-16 -top-8 hidden h-[340px] w-[340px] text-cobalt opacity-[0.06] sm:block"
+      <VerginaSun
+        className="pointer-events-none absolute -right-16 -top-8 hidden h-[340px] w-[340px] text-saffron opacity-[0.12] sm:block"
       />
 
-      <p className="eyebrow-brass">270 Hindley Street</p>
-      <h1 className="mt-3 font-display text-3xl font-semibold text-cobalt-dark sm:text-4xl">
+      <p className="eyebrow-sun">270 Hindley Street</p>
+      <h1 className="mt-3 font-display text-3xl font-semibold text-ember-dark sm:text-4xl">
         Menu
       </h1>
-      <div className="meander-divider-brass mt-4 w-24 opacity-80" aria-hidden="true" />
+      <div className="wave-divider-saffron mt-4 w-24 opacity-80" aria-hidden="true" />
 
       {/* The whole menu in one sentence. */}
       <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink/70">
@@ -46,17 +46,17 @@ export default function MenuPage() {
       <LocationIdentifier className="mt-6" />
 
       {/* Meat row — the one choice that runs through everything */}
-      <div className="carved-panel mt-8 p-6 sm:p-8">
+      <div className="linen-card mt-8 p-6 sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">
           Pick your meat
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2">
           {meats.map((meat) => (
-            <p key={meat.id} className="font-display text-xl font-semibold text-cobalt-dark">
+            <p key={meat.id} className="font-display text-xl font-semibold text-ember-dark">
               {meat.name}
             </p>
           ))}
-          <p className="font-display text-xl font-semibold text-cobalt">
+          <p className="font-display text-xl font-semibold text-ember">
             Mix
             <span className="ml-2 text-sm font-medium text-ink/50">any combination</span>
           </p>
@@ -75,7 +75,7 @@ export default function MenuPage() {
           <a
             key={group.id}
             href={`#${group.id}`}
-            className="shrink-0 whitespace-nowrap rounded-full border border-cobalt/20 bg-white/70 px-3.5 py-1.5 text-xs font-medium text-cobalt-dark/80 transition-colors hover:border-cobalt hover:text-cobalt"
+            className="shrink-0 whitespace-nowrap rounded-full border border-ember/20 bg-linen/80 px-3.5 py-1.5 text-xs font-medium text-ember-dark/80 transition-colors hover:border-ember hover:text-ember"
           >
             {group.title}
           </a>
@@ -85,28 +85,28 @@ export default function MenuPage() {
       {/* Food groups */}
       <div className="mt-6 space-y-6">
         {foodGroups.map((group) => (
-          <section key={group.id} id={group.id} className="carved-panel scroll-mt-32 p-6 sm:p-8">
+          <section key={group.id} id={group.id} className="linen-card scroll-mt-32 p-6 sm:p-8">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-              <h2 className="font-display text-xl font-semibold text-cobalt-dark sm:text-2xl">
+              <h2 className="font-display text-xl font-semibold text-ember-dark sm:text-2xl">
                 {group.title}
               </h2>
               {group.products.some((p) => p.dineInOnly) && (
-                <span className="rounded-full bg-cobalt/10 px-2.5 py-1 text-xs font-semibold text-cobalt">
+                <span className="rounded-full bg-ember/10 px-2.5 py-1 text-xs font-semibold text-ember">
                   Dine-in only
                 </span>
               )}
             </div>
-            <div className="meander-divider-brass mt-3 w-16 opacity-50" aria-hidden="true" />
+            <div className="wave-divider-saffron mt-3 w-16 opacity-50" aria-hidden="true" />
             {group.blurb && <p className="mt-3 text-sm text-ink/60">{group.blurb}</p>}
 
             <ul className="mt-5 space-y-5">
               {group.products.map((product) => (
                 <li key={product.id}>
                   <div className="flex items-baseline justify-between gap-4">
-                    <p className="font-display text-base font-semibold text-cobalt-dark">
+                    <p className="font-display text-base font-semibold text-ember-dark">
                       {product.name}
                     </p>
-                    <p className="shrink-0 font-display text-base font-semibold text-cobalt">
+                    <p className="shrink-0 font-display text-base font-semibold text-ember">
                       {priceRange(product)}
                     </p>
                   </div>
@@ -154,11 +154,11 @@ export default function MenuPage() {
       </div>
 
       {/* Extras — sits with the food, before the drinks */}
-      <section id="extras" className="carved-panel mt-6 scroll-mt-32 p-6 sm:p-8">
-        <h2 className="font-display text-xl font-semibold text-cobalt-dark sm:text-2xl">
+      <section id="extras" className="linen-card mt-6 scroll-mt-32 p-6 sm:p-8">
+        <h2 className="font-display text-xl font-semibold text-ember-dark sm:text-2xl">
           Extras
         </h2>
-        <div className="meander-divider-brass mt-3 w-16 opacity-50" aria-hidden="true" />
+        <div className="wave-divider-saffron mt-3 w-16 opacity-50" aria-hidden="true" />
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/60">
           Build on anything above. A few combinations don&rsquo;t make sense — an AB Pack is
           already sitting on chips, and a Meat Pack is meat by definition — so those options
@@ -169,18 +169,18 @@ export default function MenuPage() {
           {extras.map((extra) => (
             <div
               key={extra.id}
-              className="flex items-baseline justify-between gap-4 border-b border-cobalt/10 pb-2.5"
+              className="flex items-baseline justify-between gap-4 border-b border-ember/10 pb-2.5"
             >
               <p className="text-sm font-medium">{extra.name}</p>
-              <p className="shrink-0 text-sm font-semibold text-cobalt">
+              <p className="shrink-0 text-sm font-semibold text-ember">
                 +{formatMoney(extra.price)}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="mt-7 border-t border-brass/40 pt-5">
-          <p className="font-display text-base font-semibold text-cobalt-dark">Sauces</p>
+        <div className="mt-7 border-t border-saffron/40 pt-5">
+          <p className="font-display text-base font-semibold text-ember-dark">Sauces</p>
           <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-ink/60">
             Two on the house with every item, three on an AB Pack. After that they&rsquo;re{" "}
             {formatMoney(SAUCE_PRICE)} each — a price we consider a formality, since nobody has
@@ -193,21 +193,21 @@ export default function MenuPage() {
       {/* Drinks & coffee, last */}
       <div className="mt-6 space-y-6">
         {drinkGroups.map((group) => (
-          <section key={group.id} id={group.id} className="carved-panel scroll-mt-32 p-6 sm:p-8">
-            <h2 className="font-display text-xl font-semibold text-cobalt-dark sm:text-2xl">
+          <section key={group.id} id={group.id} className="linen-card scroll-mt-32 p-6 sm:p-8">
+            <h2 className="font-display text-xl font-semibold text-ember-dark sm:text-2xl">
               {group.title}
             </h2>
-            <div className="meander-divider-brass mt-3 w-16 opacity-50" aria-hidden="true" />
+            <div className="wave-divider-saffron mt-3 w-16 opacity-50" aria-hidden="true" />
             {group.blurb && <p className="mt-3 text-sm text-ink/60">{group.blurb}</p>}
 
             <ul className="mt-5 space-y-5">
               {group.products.map((product) => (
                 <li key={product.id}>
                   <div className="flex items-baseline justify-between gap-4">
-                    <p className="font-display text-base font-semibold text-cobalt-dark">
+                    <p className="font-display text-base font-semibold text-ember-dark">
                       {product.name}
                     </p>
-                    <p className="shrink-0 font-display text-base font-semibold text-cobalt">
+                    <p className="shrink-0 font-display text-base font-semibold text-ember">
                       {priceRange(product)}
                     </p>
                   </div>
@@ -238,8 +238,8 @@ export default function MenuPage() {
         ))}
       </div>
 
-      <div className="mt-12 border-t border-cobalt/10 pt-8 text-center">
-        <Link href="/order" className="btn-orb-blue">
+      <div className="mt-12 border-t border-ember/10 pt-8 text-center">
+        <Link href="/order" className="btn-ember">
           Start Your Order
         </Link>
       </div>

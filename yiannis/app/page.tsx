@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import SocialLinks from "@/components/SocialLinks";
 import StatsBand from "@/components/StatsBand";
-import Rosette from "@/components/ornament/Rosette";
-import TempleFrame from "@/components/ornament/TempleFrame";
+import VerginaSun from "@/components/ornament/VerginaSun";
+import ArchFrame from "@/components/ornament/ArchFrame";
 import TrackedLink from "@/components/TrackedLink";
 import TrackedAnchor from "@/components/TrackedAnchor";
 import { business, heroCopy, whyYiannis } from "@/lib/content";
@@ -56,15 +56,15 @@ const featuredReviews = [
 export default function HomePage() {
   return (
     <>
-      {/* HERO — a temple façade: columns carrying the name */}
-      <section className="scene-atmosphere relative overflow-hidden bg-sand">
-        {/* Faint rosette behind the medallion, echoing the carved wall */}
-        <Rosette
-          className="pointer-events-none absolute left-1/2 top-4 h-[420px] w-[420px] -translate-x-1/2 text-cobalt opacity-[0.07] sm:h-[560px] sm:w-[560px]"
+      {/* HERO — looking out through a village arch at the sunset behind the page */}
+      <section className="horizon-glow relative overflow-hidden">
+        {/* The setting sun, echoed behind the medallion */}
+        <VerginaSun
+          className="pointer-events-none absolute left-1/2 top-4 h-[420px] w-[420px] -translate-x-1/2 text-saffron opacity-[0.12] sm:h-[560px] sm:w-[560px]"
         />
 
         <div className="container-page relative py-14 sm:py-20">
-          <TempleFrame tone="dark">
+          <ArchFrame tone="dark">
             <div className="flex flex-col items-center text-center">
               <Image
                 src="/images/medallion-512.png"
@@ -72,13 +72,13 @@ export default function HomePage() {
                 width={512}
                 height={512}
                 priority
-                className="h-32 w-32 drop-shadow-[0_18px_30px_rgba(28,56,80,0.28)] sm:h-44 sm:w-44"
+                className="h-32 w-32 drop-shadow-[0_18px_30px_rgba(59,29,20,0.28)] sm:h-44 sm:w-44"
               />
 
-              <h1 className="mt-7 max-w-3xl font-display text-[2.1rem] font-semibold leading-[1.08] text-cobalt-dark sm:text-6xl">
+              <h1 className="mt-7 max-w-3xl font-display text-[2.1rem] font-semibold leading-[1.08] text-ember-dark sm:text-6xl">
                 {heroCopy.headline}
               </h1>
-              <div className="meander-divider-brass mt-6 w-28 opacity-80" aria-hidden="true" />
+              <div className="wave-divider-saffron mt-6 w-28 opacity-80" aria-hidden="true" />
               <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/70 sm:text-lg">
                 {heroCopy.subheading}
               </p>
@@ -87,13 +87,13 @@ export default function HomePage() {
                 <TrackedLink
                   href="/order"
                   event={{ name: "order_online_click", path: "pickup" }}
-                  className="btn-orb-blue"
+                  className="btn-ember"
                 >
                   Order Online
                 </TrackedLink>
               </div>
             </div>
-          </TempleFrame>
+          </ArchFrame>
         </div>
       </section>
 
@@ -101,16 +101,16 @@ export default function HomePage() {
       {promo.active && (
         <Link
           href="/parea"
-          className="group block border-y border-cobalt/15 bg-mist transition-colors hover:bg-mist-deep"
+          className="group block border-y border-ember/15 bg-clay transition-colors hover:bg-clay-deep"
         >
           <div className="container-page flex flex-wrap items-center justify-center gap-x-2.5 gap-y-0.5 py-2.5 text-center">
-            <span className="text-sm font-bold uppercase tracking-wide text-cobalt-dark">
+            <span className="text-sm font-bold uppercase tracking-wide text-ember-dark">
               {promo.title}
             </span>
             <span className="text-sm text-ink/70">{promo.strip}</span>
             <span
               aria-hidden="true"
-              className="text-sm text-cobalt transition-transform group-hover:translate-x-0.5"
+              className="text-sm text-ember transition-transform group-hover:translate-x-0.5"
             >
               &rarr;
             </span>
@@ -119,16 +119,16 @@ export default function HomePage() {
       )}
 
       {/* FEATURED FOOD */}
-      <section className="bg-sand py-16 sm:py-20">
+      <section className="veil-linen py-16 sm:py-20">
         <div className="container-page">
-          <p className="eyebrow-brass">Lamb, chicken, pork</p>
-          <h2 className="mt-3 font-display text-2xl font-semibold text-cobalt-dark sm:text-3xl">
+          <p className="eyebrow-sun">Lamb, chicken, pork</p>
+          <h2 className="mt-3 font-display text-2xl font-semibold text-ember-dark sm:text-3xl">
             How You Want It
           </h2>
           <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-7 lg:grid-cols-4">
             {featuredFood.map((item) => (
               <div key={item.label}>
-                <div className="plinth overflow-hidden rounded-sm">
+                <div className="ledge overflow-hidden rounded-sm">
                   <Image
                     src={item.image}
                     alt={item.label}
@@ -137,7 +137,7 @@ export default function HomePage() {
                     className="aspect-square w-full object-cover"
                   />
                 </div>
-                <p className="mt-4 font-display text-base font-semibold text-cobalt-dark">
+                <p className="mt-4 font-display text-base font-semibold text-ember-dark">
                   {item.label}
                 </p>
                 <p className="mt-1 text-sm leading-relaxed text-ink/60">{item.blurb}</p>
@@ -147,11 +147,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* HOUSE NUMBERS — deep cobalt band, colonnade of stats */}
-      <section className="scene-atmosphere scene-atmosphere-dark relative bg-cobalt-dark py-16 sm:py-20">
+      {/* HOUSE NUMBERS — night over the coals, skewers between the stats */}
+      <section className="ember-glow relative bg-ember-dark/95 py-16 sm:py-20">
         <div className="container-page relative">
           <div className="text-center">
-            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brass-light">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-saffron-light">
               The house numbers
             </p>
             <h2 className="mt-3 font-display text-2xl font-semibold text-white sm:text-3xl">
@@ -164,17 +164,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* WHY — pale band, brass accents */}
-      <section className="marble-surface border-y border-cobalt/10 py-16 sm:py-20">
+      {/* WHY — clay wash, saffron accents */}
+      <section className="veil-clay border-y border-ember/10 py-16 sm:py-20">
         <div className="container-page">
-          <p className="eyebrow-brass">Why it&rsquo;s lasted</p>
-          <h2 className="mt-3 font-display text-2xl font-semibold text-cobalt-dark sm:text-3xl">
+          <p className="eyebrow-sun">Why it&rsquo;s lasted</p>
+          <h2 className="mt-3 font-display text-2xl font-semibold text-ember-dark sm:text-3xl">
             The Short Version
           </h2>
           <ul className="mt-9 grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
             {whyYiannis.map((reason) => (
-              <li key={reason.title} className="border-t border-brass/40 pt-4">
-                <p className="font-display text-base font-semibold text-cobalt-dark">
+              <li key={reason.title} className="border-t border-saffron/40 pt-4">
+                <p className="font-display text-base font-semibold text-ember-dark">
                   {reason.title}
                 </p>
                 <p className="mt-1 text-sm leading-relaxed text-ink/60">{reason.detail}</p>
@@ -185,30 +185,30 @@ export default function HomePage() {
       </section>
 
       {/* MENU PREVIEW */}
-      <section className="bg-mist py-16 sm:py-20">
+      <section className="veil-linen py-16 sm:py-20">
         <div className="container-page flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="eyebrow-brass">The whole list</p>
-            <h2 className="mt-3 font-display text-2xl font-semibold text-cobalt-dark sm:text-3xl">
+            <p className="eyebrow-sun">The whole list</p>
+            <h2 className="mt-3 font-display text-2xl font-semibold text-ember-dark sm:text-3xl">
               The Whole Menu, Three Meats Deep
             </h2>
             <p className="mt-2 max-w-md text-ink/60">
               Pick your meat, pick how it&rsquo;s served, add what you want. That&rsquo;s it.
             </p>
           </div>
-          <Link href="/menu" className="btn-orb shrink-0">
+          <Link href="/menu" className="btn-limewash shrink-0">
             View Full Menu
           </Link>
         </div>
       </section>
 
       {/* REVIEWS + SOCIAL — one compact band instead of two tall ones */}
-      <section className="marble-surface border-y border-cobalt/10 py-12 sm:py-14">
+      <section className="veil-clay border-y border-ember/10 py-12 sm:py-14">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
             <div>
-              <p className="eyebrow-brass">In their words</p>
-              <h2 className="mt-2 font-display text-xl font-semibold text-cobalt-dark sm:text-2xl">
+              <p className="eyebrow-sun">In their words</p>
+              <h2 className="mt-2 font-display text-xl font-semibold text-ember-dark sm:text-2xl">
                 What Adelaide Says
               </h2>
             </div>
@@ -216,7 +216,7 @@ export default function HomePage() {
               href={business.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-semibold text-cobalt underline underline-offset-4 hover:text-cobalt-dark"
+              className="text-sm font-semibold text-ember underline underline-offset-4 hover:text-ember-dark"
             >
               Read more reviews
             </a>
@@ -225,12 +225,12 @@ export default function HomePage() {
           {/* Quotes as bas-relief lines, not cards — far less vertical room */}
           <ul className="mt-6 grid gap-x-8 gap-y-5 sm:grid-cols-3">
             {featuredReviews.map((review) => (
-              <li key={review.author} className="border-t border-brass/40 pt-3.5">
+              <li key={review.author} className="border-t border-saffron/40 pt-3.5">
                 <p className="text-sm leading-relaxed text-ink/70">
                   &ldquo;{review.quote}&rdquo;
                 </p>
-                <p className="mt-2 text-xs font-semibold text-cobalt-dark">
-                  <span className="mr-1.5 tracking-wide text-brass" aria-label="5 out of 5">
+                <p className="mt-2 text-xs font-semibold text-ember-dark">
+                  <span className="mr-1.5 tracking-wide text-saffron" aria-label="5 out of 5">
                     &#9733;&#9733;&#9733;&#9733;&#9733;
                   </span>
                   {review.author}
@@ -240,33 +240,33 @@ export default function HomePage() {
             ))}
           </ul>
 
-          <div className="mt-8 border-t border-cobalt/10 pt-6">
+          <div className="mt-8 border-t border-ember/10 pt-6">
             <SocialLinks />
           </div>
         </div>
       </section>
 
       {/* FINAL CTA */}
-      <section className="scene-atmosphere scene-atmosphere-dark relative overflow-hidden bg-cobalt py-16 text-center text-white sm:py-24">
-        <Rosette className="pointer-events-none absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 text-white opacity-[0.06]" />
+      <section className="ember-glow relative overflow-hidden bg-ember py-16 text-center text-white sm:py-24">
+        <VerginaSun className="pointer-events-none absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 text-saffron-light opacity-[0.12]" />
         <div className="container-page relative">
-          <p className="font-script text-2xl italic text-brass-light">Yamas!</p>
+          <p className="font-script text-2xl italic text-saffron-light">Yamas!</p>
           <h2 className="mt-1 font-display text-2xl font-semibold sm:text-4xl">
             The Spit&rsquo;s Already Turning
           </h2>
-          <div className="meander-divider-brass mx-auto mt-6 w-28 opacity-70" aria-hidden="true" />
+          <div className="wave-divider-saffron mx-auto mt-6 w-28 opacity-70" aria-hidden="true" />
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <TrackedLink
               href="/order"
               event={{ name: "order_online_click", path: "pickup" }}
-              className="btn-orb"
+              className="btn-limewash"
             >
               Order Online
             </TrackedLink>
             <TrackedAnchor
               href={business.phoneHref}
               event={{ name: "phone_click" }}
-              className="btn-orb-blue !bg-none !bg-white/10 !shadow-none ring-1 ring-inset ring-white/40 hover:!bg-white/15"
+              className="btn-ember !bg-none !bg-white/10 !shadow-none ring-1 ring-inset ring-white/40 hover:!bg-white/15"
             >
               Call {business.phone}
             </TrackedAnchor>

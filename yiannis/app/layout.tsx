@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import BottomNav from "@/components/BottomNav";
 import StructuredData from "@/components/StructuredData";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import DuskBackdrop from "@/components/theme/DuskBackdrop";
 import { siteMeta } from "@/lib/content";
 
 // Fraunces — a quirky, high-contrast display serif common in premium food branding.
@@ -34,6 +35,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  themeColor: "#fbf5ec",
 };
 
 export const metadata: Metadata = {
@@ -57,9 +59,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-screen flex-col">
         <StructuredData />
         <GoogleAnalytics />
+        {/* The scene everything else is layered over — see globals.css */}
+        <DuskBackdrop />
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:text-cobalt"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-linen focus:px-4 focus:py-2 focus:text-ember"
         >
           Skip to content
         </a>

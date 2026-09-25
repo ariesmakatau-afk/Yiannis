@@ -126,7 +126,7 @@ export default function ProductCustomiser({ product, onClose, onAdd }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-cobalt-dark/50 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-ember-dark/50 p-0 backdrop-blur-sm sm:items-center sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label={`Customise ${product.name}`}
@@ -137,9 +137,9 @@ export default function ProductCustomiser({ product, onClose, onAdd }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-cobalt/10 bg-white px-5 py-4 sm:px-6">
+        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-ember/10 bg-white px-5 py-4 sm:px-6">
           <div>
-            <p className="font-display text-xl font-semibold text-cobalt-dark">{product.name}</p>
+            <p className="font-display text-xl font-semibold text-ember-dark">{product.name}</p>
             {product.description && (
               <p className="mt-0.5 text-sm text-ink/60">{product.description}</p>
             )}
@@ -238,7 +238,7 @@ export default function ProductCustomiser({ product, onClose, onAdd }: Props) {
                 })}
               </div>
               {selectedMeats.length > 1 && (
-                <p className="mt-2.5 text-sm font-medium text-cobalt">
+                <p className="mt-2.5 text-sm font-medium text-ember">
                   {describeMeats(selectedMeats)}
                 </p>
               )}
@@ -278,7 +278,7 @@ export default function ProductCustomiser({ product, onClose, onAdd }: Props) {
                 })}
               </div>
               {selectedSauces.length > product.freeSauces && (
-                <p className="mt-2.5 text-sm font-medium text-cobalt">
+                <p className="mt-2.5 text-sm font-medium text-ember">
                   {selectedSauces.length} sauces —{" "}
                   {selectedSauces.length - product.freeSauces} over the included{" "}
                   {product.freeSauces}, so{" "}
@@ -303,13 +303,13 @@ export default function ProductCustomiser({ product, onClose, onAdd }: Props) {
                       type="button"
                       aria-pressed={on}
                       onClick={() => toggleExtra(extra.id)}
-                      className="flex w-full items-center justify-between gap-3 rounded-sm border border-transparent px-3 py-2.5 text-left transition-colors hover:bg-cobalt/[0.04]"
+                      className="flex w-full items-center justify-between gap-3 rounded-sm border border-transparent px-3 py-2.5 text-left transition-colors hover:bg-ember/[0.04]"
                     >
                       <span className="flex items-center gap-3">
                         <span
                           aria-hidden="true"
                           className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border transition-colors ${
-                            on ? "border-cobalt bg-cobalt text-white" : "border-ink/25"
+                            on ? "border-ember bg-ember text-white" : "border-ink/25"
                           }`}
                         >
                           {on && (
@@ -356,7 +356,7 @@ export default function ProductCustomiser({ product, onClose, onAdd }: Props) {
               </button>
               <span
                 aria-live="polite"
-                className="w-10 text-center font-display text-2xl font-semibold text-cobalt-dark"
+                className="w-10 text-center font-display text-2xl font-semibold text-ember-dark"
               >
                 {quantity}
               </span>
@@ -373,7 +373,7 @@ export default function ProductCustomiser({ product, onClose, onAdd }: Props) {
         </div>
 
         {/* Footer / add */}
-        <div className="sticky bottom-0 border-t border-cobalt/10 bg-white px-5 py-4 sm:px-6">
+        <div className="sticky bottom-0 border-t border-ember/10 bg-white px-5 py-4 sm:px-6">
           {meatMissing && (
             <p className="mb-3 text-sm font-medium text-amber-700">
               Pick at least one meat to continue.
@@ -383,7 +383,7 @@ export default function ProductCustomiser({ product, onClose, onAdd }: Props) {
             type="button"
             onClick={handleAdd}
             disabled={meatMissing}
-            className="btn-orb-blue w-full disabled:cursor-not-allowed disabled:opacity-40"
+            className="btn-ember w-full disabled:cursor-not-allowed disabled:opacity-40"
           >
             Add to order · {formatMoney(unitPrice * quantity)}
           </button>

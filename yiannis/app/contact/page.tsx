@@ -16,8 +16,8 @@ const directionsHref = `https://www.google.com/maps/search/?api=1&query=${encode
 export default function ContactPage() {
   return (
     <div className="container-page py-10 sm:py-14">
-      <h1 className="font-display text-3xl font-semibold text-cobalt-dark sm:text-4xl">Contact</h1>
-      <div className="meander-divider-brass mt-4 w-24 opacity-80" aria-hidden="true" />
+      <h1 className="font-display text-3xl font-semibold text-ember-dark sm:text-4xl">Contact</h1>
+      <div className="wave-divider-saffron mt-4 w-24 opacity-80" aria-hidden="true" />
       <LocationIdentifier className="mt-6" />
 
       <div className="mt-10 grid gap-10 sm:grid-cols-2">
@@ -31,7 +31,7 @@ export default function ContactPage() {
             <TrackedAnchor
               href={business.phoneHref}
               event={{ name: "phone_click" }}
-              className="mt-1 block font-semibold text-cobalt"
+              className="mt-1 block font-semibold text-ember"
             >
               {business.phone}
             </TrackedAnchor>
@@ -68,7 +68,7 @@ export default function ContactPage() {
             target="_blank"
             rel="noopener noreferrer"
             event={{ name: "get_directions_click" }}
-            className="btn-orb mt-2"
+            className="btn-limewash mt-2"
           >
             Get Directions
           </TrackedAnchor>

@@ -1,7 +1,7 @@
 import { business } from "@/lib/content";
 
 type SocialLinksProps = {
-  /** "dark" for pale backgrounds, "light" for cobalt/footer backgrounds. */
+  /** "dark" for pale backgrounds, "light" for ember/footer backgrounds. */
   tone?: "dark" | "light";
   className?: string;
 };
@@ -17,7 +17,7 @@ export default function SocialLinks({ tone = "dark", className = "" }: SocialLin
   const skin =
     tone === "light"
       ? "border-white/30 text-white/90 hover:border-white/70 hover:bg-white/10"
-      : "border-cobalt/25 text-cobalt-dark hover:border-cobalt hover:bg-cobalt/[0.06] hover:text-cobalt";
+      : "border-ember/25 text-ember-dark hover:border-ember hover:bg-ember/[0.06] hover:text-ember";
 
   return (
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>

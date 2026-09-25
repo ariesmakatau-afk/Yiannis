@@ -6,7 +6,13 @@ import SocialLinks from "@/components/SocialLinks";
 
 export default function Footer() {
   return (
-    <footer className="bg-cobalt pb-4 pt-14 text-white/80 md:pb-5">
+    <footer className="footer-night mt-14 pb-4 pt-14 text-white/80 md:pb-5">
+      {/* Nightfall: the village and hills go to silhouette above the footer */}
+      <div aria-hidden="true" className="footer-skyline">
+        <svg viewBox="0 0 1440 56" preserveAspectRatio="none" fill="currentColor">
+          <path d="M0 40 C140 30 240 22 360 28 C440 32 500 18 560 14 V8 h14 v6 h10 V4 h16 v10 h12 V10 h14 v4 C700 10 740 2 780 4 C820 6 860 16 900 22 h10 V14 h16 v10 C1000 30 1100 26 1200 32 C1300 38 1380 36 1440 34 V56 H0Z" />
+        </svg>
+      </div>
       <div className="container-page grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Image
@@ -29,7 +35,7 @@ export default function Footer() {
           <TrackedAnchor
             href={business.phoneHref}
             event={{ name: "phone_click" }}
-            className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-white underline decoration-brass decoration-2 underline-offset-4 transition-colors hover:decoration-white"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-white underline decoration-saffron decoration-2 underline-offset-4 transition-colors hover:decoration-white"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path
@@ -43,7 +49,7 @@ export default function Footer() {
           </TrackedAnchor>
           <a
             href={`mailto:${business.email}`}
-            className="mt-2 flex items-center gap-2 text-sm font-medium text-white underline decoration-brass decoration-2 underline-offset-4 transition-colors hover:decoration-white"
+            className="mt-2 flex items-center gap-2 text-sm font-medium text-white underline decoration-saffron decoration-2 underline-offset-4 transition-colors hover:decoration-white"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.8" />
@@ -81,7 +87,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="meander-divider-brass mt-9 opacity-50" aria-hidden="true" />
+      <div className="wave-divider-saffron mt-9 opacity-50" aria-hidden="true" />
 
       <p className="container-page mt-4 pb-14 text-xs text-white/40 md:pb-0">
         &copy; {new Date().getFullYear()} Yianni&rsquo;s on Hindley Street, Adelaide CBD. All

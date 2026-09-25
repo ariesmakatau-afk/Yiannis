@@ -61,15 +61,15 @@ export default function CustomerWall({ initial }: { initial: Photo[] }) {
 
   return (
     <section className="mt-12">
-      <p className="eyebrow-brass">Parea Mas</p>
-      <h2 className="mt-3 font-display text-2xl font-semibold text-cobalt-dark">
+      <p className="eyebrow-sun">Parea Mas</p>
+      <h2 className="mt-3 font-display text-2xl font-semibold text-ember-dark">
         Customer wall
       </h2>
       <p className="mt-2 text-sm leading-relaxed text-ink/60">
         Write the caption, then pick the photo. It goes live straight away.
       </p>
 
-      <div className="carved-panel mt-5 space-y-3.5 p-5">
+      <div className="linen-card mt-5 space-y-3.5 p-5">
         <div>
           <label htmlFor="caption" className="block text-sm font-semibold">
             Caption
@@ -109,7 +109,7 @@ export default function CustomerWall({ initial }: { initial: Photo[] }) {
           type="button"
           disabled={busy}
           onClick={() => inputRef.current?.click()}
-          className="btn-orb-blue w-full disabled:opacity-60"
+          className="btn-ember w-full disabled:opacity-60"
         >
           {busy ? "Uploading…" : "Choose photo & add"}
         </button>
@@ -136,7 +136,7 @@ export default function CustomerWall({ initial }: { initial: Photo[] }) {
       ) : (
         <ul className="mt-3 space-y-3">
           {photos.map((p) => (
-            <li key={p.id} className="flex gap-3 rounded-sm border border-cobalt/15 bg-white p-3">
+            <li key={p.id} className="flex gap-3 rounded-sm border border-ember/15 bg-white p-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={p.url}
@@ -146,7 +146,7 @@ export default function CustomerWall({ initial }: { initial: Photo[] }) {
               <div className="min-w-0 flex-1">
                 <p className="text-sm leading-snug text-ink/75">{p.caption}</p>
                 {p.name && (
-                  <p className="mt-0.5 text-xs font-semibold text-cobalt-dark">{p.name}</p>
+                  <p className="mt-0.5 text-xs font-semibold text-ember-dark">{p.name}</p>
                 )}
               </div>
               <button

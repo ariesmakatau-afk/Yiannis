@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 export default function OrderPage() {
   return (
     <div className="container-page py-10 sm:py-14">
-      <h1 className="font-display text-3xl font-semibold text-cobalt-dark sm:text-4xl">Order Online</h1>
-      <div className="meander-divider-brass mt-4 w-24 opacity-80" aria-hidden="true" />
+      <h1 className="font-display text-3xl font-semibold text-ember-dark sm:text-4xl">Order Online</h1>
+      <div className="wave-divider-saffron mt-4 w-24 opacity-80" aria-hidden="true" />
       <p className="mt-2 max-w-prose text-ink/60">
         Two ways to order: delivery via Uber Eats, or build a pickup order here and pay when you
         collect it.

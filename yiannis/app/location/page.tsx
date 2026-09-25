@@ -17,8 +17,8 @@ const directionsHref = `https://www.google.com/maps/search/?api=1&query=${encode
 export default function LocationPage() {
   return (
     <div className="container-page py-10 sm:py-14">
-      <h1 className="font-display text-3xl font-semibold text-cobalt-dark sm:text-4xl">Location</h1>
-      <div className="meander-divider-brass mt-4 w-24 opacity-80" aria-hidden="true" />
+      <h1 className="font-display text-3xl font-semibold text-ember-dark sm:text-4xl">Location</h1>
+      <div className="wave-divider-saffron mt-4 w-24 opacity-80" aria-hidden="true" />
       <LocationIdentifier className="mt-6" />
 
       <div className="mt-10 grid gap-10 lg:grid-cols-2">
@@ -45,18 +45,18 @@ export default function LocationPage() {
               target="_blank"
               rel="noopener noreferrer"
               event={{ name: "get_directions_click" }}
-              className="btn-orb-blue"
+              className="btn-ember"
             >
               Get Directions
             </TrackedAnchor>
             <TrackedAnchor
               href={business.phoneHref}
               event={{ name: "phone_click" }}
-              className="btn-orb"
+              className="btn-limewash"
             >
               Call {business.phone}
             </TrackedAnchor>
-            <Link href="/order" className="btn-orb">
+            <Link href="/order" className="btn-limewash">
               Order Online
             </Link>
           </div>
