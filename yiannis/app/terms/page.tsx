@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="container-page max-w-prose py-10 sm:py-14">
-      <h1 className="font-display text-3xl font-semibold text-cobalt-dark sm:text-4xl">
+      <h1 className="font-display text-3xl font-semibold text-ember-dark sm:text-4xl">
         Terms of Use
       </h1>
-      <div className="meander-divider-brass mt-4 w-24 opacity-80" aria-hidden="true" />
+      <div className="wave-divider-saffron mt-4 w-24 opacity-80" aria-hidden="true" />
 
       <div className="mt-8 space-y-8 text-ink/75">
         <p>
@@ -21,7 +21,7 @@ export default function TermsPage() {
         </p>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Pickup orders
           </h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -48,7 +48,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Uber Eats orders
           </h2>
           <p className="mt-3">
@@ -59,7 +59,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Website content
           </h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -76,7 +76,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Liability
           </h2>
           <p className="mt-3">
@@ -89,7 +89,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Governing law
           </h2>
           <p className="mt-3">
@@ -98,13 +98,13 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Contact
           </h2>
           <ul className="mt-3 space-y-1">
             <li>
               Email:{" "}
-              <a href={`mailto:${business.email}`} className="text-cobalt underline underline-offset-4">
+              <a href={`mailto:${business.email}`} className="text-ember underline underline-offset-4">
                 {business.email}
               </a>
             </li>

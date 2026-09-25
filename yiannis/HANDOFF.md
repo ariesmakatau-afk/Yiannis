@@ -709,3 +709,44 @@ next run rather than lost. Archiving happens only after the email is away.
 No `npm run build` was possible (no network in the build container). Syntax,
 import paths and named exports were checked programmatically. **Run a build
 and test the login flow before deploying.**
+
+## Update — "Hindley Dusk" theme (replaces the marble temple theme)
+
+The site now sits on a **scene** instead of a flat colour:
+`components/theme/DuskBackdrop.tsx` is fixed behind the whole page. It shows
+an island village at sunset: sky, a Vergina sun, the Aegean, white houses
+with a blue-domed church and a windmill, olive hills, and sparks rising off
+the charcoal. It writes scroll progress to `--dusk` (0 → 1) on `<html>`,
+and the CSS uses that to sink the sun into the sea, turn the sky rose, bring
+the hills up and build the embers. The page opens in early evening and
+ends at night over the coals, and the footer's skyline goes to silhouette.
+`body` is transparent on purpose, and sections are **translucent veils**
+(`.veil-linen`, `.veil-clay`) so the scene keeps showing through.
+
+Each element takes one piece of the scene (see the header comment in
+`app/globals.css`):
+
+| Old (marble)            | New (dusk)                  | Motif                          |
+|-------------------------|-----------------------------|--------------------------------|
+| `cobalt` / `mist` / `sand` / `brass` tokens | `ember` / `clay` / `linen` / `saffron` (+ `olive`, `aegean`, `char`) | coals, sun-baked clay, limewash, olive-oil gold |
+| `.meander-divider*`     | `.wave-divider*`            | running wave, meaning the sea  |
+| `.eyebrow-brass`        | `.eyebrow-sun`              | a small setting sun            |
+| `.btn-orb-blue`         | `.btn-ember`                | a live coal that catches on hover |
+| `.btn-orb`              | `.btn-limewash`             | a whitewashed wall             |
+| `.carved-panel`         | `.linen-card`               | tablecloth with a stitched hem |
+| `.plinth`               | `.ledge`                    | terracotta roof-tile ledge     |
+| `.scene-atmosphere(-dark)` | `.horizon-glow` / `.ember-glow` | sunset glow / coals with sparks |
+| `TempleFrame` + `Column` | `ArchFrame`                | Cycladic arch with a keystone  |
+| `Rosette`               | `VerginaSun`                | the sun from the backdrop      |
+| StatsBand columns       | `Skewer`                    | spits over the coals           |
+| mobile menu marble panel | `.menu-panel--scene`       | sky → sea → hills along its foot |
+| header                  | `.header-glass`             | sky glass with a horizon line  |
+| footer `bg-cobalt`      | `.footer-night` + skyline   | nightfall                      |
+
+Reduced motion: the scene stays, but it stops moving. There are no sparks
+and no drifting water.
+
+No longer referenced, safe to delete: `public/images/texture-marble.jpg`,
+`scene-feature.png`, `column-left.png`, `column-right.png`. The order
+digest email (`app/api/orders/digest/route.ts`) still uses the old blue
+hex values inline.

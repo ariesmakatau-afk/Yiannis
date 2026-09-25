@@ -2,23 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =====================================================================
+   HINDLEY DUSK
+   ---------------------------------------------------------------------
+   The site sits on a scene rather than a flat colour: an Aegean sunset
+   seen from an island village, which sinks as you scroll until the page
+   ends in the night and the charcoal the meat is cooked over. The scene
+   lives in <DuskBackdrop /> (components/theme), fixed behind everything,
+   and every component below borrows one piece of it:
+
+     sky ........ page ground, the header glass, veils over sections
+     sun ........ eyebrow markers, glows, the Vergina-sun watermark
+     sea ........ the running-wave trim (Vitruvian scroll)
+     village .... limewash buttons, the arch frame, terracotta tile ledges
+     olive hills  the dropdown menu's horizon, the footer skyline
+     coals ...... the primary "ember" buttons, dark bands, rising sparks
+
+   `--dusk` (0 → 1) is written to <html> by the backdrop as you scroll,
+   so anything can key off how far through the evening the reader is.
+   ===================================================================== */
+
+:root {
+  --dusk: 0;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Canvas colour behind the scene, and what shows before it paints. */
+    background-color: theme("colors.linen.DEFAULT");
   }
 
   html {
-    /* Decorative rosettes sit outside their sections by design; without
-       this they widen the document and the browser zooms out to fit. */
+    /* Decorative suns sit outside their sections by design; without this
+       they widen the document and the browser zooms out to fit. */
     overflow-x: clip;
   }
 
   body {
-    @apply bg-sand text-ink font-body antialiased;
+    /* Transparent on purpose: the backdrop scene is the page. */
+    @apply bg-transparent text-ink font-body antialiased;
   }
 
-  /* Fraunces has plenty of character of its own — it wants tight tracking,
-     unlike the inscriptional serif it replaced. */
+  /* Fraunces has plenty of character of its own — it wants tight tracking. */
   h1,
   h2,
   h3,
@@ -26,12 +52,17 @@
     @apply font-display tracking-tight;
   }
 
+  ::selection {
+    background: rgba(232, 187, 102, 0.45);
+    color: theme("colors.ember.dark");
+  }
+
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
   textarea:focus-visible,
   select:focus-visible {
-    outline: 2px solid theme("colors.cobalt.DEFAULT");
+    outline: 2px solid theme("colors.ember.DEFAULT");
     outline-offset: 2px;
   }
 
@@ -48,214 +79,480 @@
 }
 
 @layer components {
-  /* ---------- Greek key (meander) trim ---------- */
-  .meander-divider {
-    height: 10px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10' viewBox='0 0 40 10'%3E%3Cpath d='M0 0h10v10H0zM10 0h30v3H16v4h24v3H10z' fill='%23ffffff'/%3E%3C/svg%3E");
-    background-repeat: repeat-x;
-    background-size: 40px 10px;
-  }
-
-  .meander-divider-navy {
-    height: 10px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10' viewBox='0 0 40 10'%3E%3Cpath d='M0 0h10v10H0zM10 0h30v3H16v4h24v3H10z' fill='%232f5578'/%3E%3C/svg%3E");
-    background-repeat: repeat-x;
-    background-size: 40px 10px;
-  }
-
-  /* Brass meander — the accent trim, used where a section needs a warm
-     note against all the blue and marble. */
-  .meander-divider-brass {
-    height: 10px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10' viewBox='0 0 40 10'%3E%3Cpath d='M0 0h10v10H0zM10 0h30v3H16v4h24v3H10z' fill='%23a8873f'/%3E%3C/svg%3E");
-    background-repeat: repeat-x;
-    background-size: 40px 10px;
-  }
-
-  /* Small brass eyebrow label, for section kickers. */
-  .eyebrow-brass {
-    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brass-deep;
-  }
-  .eyebrow-brass::before {
-    content: "";
-    width: 1.5rem;
-    height: 1px;
-    background-color: theme("colors.brass.DEFAULT");
-    opacity: 0.7;
-  }
-
-  /* ---------- Marble surfaces ----------
-     The reference still-life is used as *atmosphere*, never as a pasted
-     picture. Previously `.scene-bg` dropped the whole composition in at
-     `background-size: cover` behind three different sections, so the same
-     photograph appeared in chunks down the page. Now the plaster texture
-     is a faint tiled ground, the architecture is drawn as vector
-     (components/ornament/*), and the photo itself only appears as a
-     barely-there wash. */
-  .marble-surface {
-    background-color: theme("colors.mist.DEFAULT");
-    background-image: url("/images/texture-marble.jpg");
-    background-size: 560px auto;
-    background-repeat: repeat;
-    background-blend-mode: luminosity;
-  }
-
-  /* Faint marble wash — for sections that need texture without weight. */
-  .marble-wash {
-    position: relative;
-    isolation: isolate;
-  }
-  .marble-wash::before {
-    content: "";
-    position: absolute;
+  /* =================================================================
+     THE BACKDROP SCENE (components/theme/DuskBackdrop.tsx)
+     Layers, back to front: sky → later sky → sun → sea → village →
+     olive hills → rising embers → grain. Every layer is fixed, so the
+     only per-frame work is a transform reading `--dusk`.
+     ================================================================= */
+  .dusk-backdrop {
+    --sun-x: 50%;
+    position: fixed;
     inset: 0;
-    z-index: -1;
-    background-image: url("/images/texture-marble.jpg");
-    background-size: 640px auto;
-    opacity: 0.35;
+    z-index: -10;
+    overflow: hidden;
     pointer-events: none;
   }
-
-  /* Atmospheric still-life layer. Sits far back at low opacity and fades
-     out at the edges, so it reads as depth rather than as an image. Use
-     sparingly — once or twice a page at most. */
-  .scene-atmosphere {
-    position: relative;
-    isolation: isolate;
+  @media (min-width: 1024px) {
+    .dusk-backdrop {
+      --sun-x: 78%;
+    }
   }
-  .scene-atmosphere::before {
-    content: "";
+  .dusk-layer {
     position: absolute;
     inset: 0;
-    z-index: -1;
-    background-image: url("/images/scene-feature.png");
-    background-size: cover;
-    background-position: center 30%;
-    background-repeat: no-repeat;
-    opacity: 0.09;
-    mix-blend-mode: luminosity;
-    -webkit-mask-image: radial-gradient(
-      ellipse 85% 75% at 50% 45%,
-      #000 40%,
-      transparent 100%
+  }
+
+  /* Early evening: limewash white at the top melting into apricot. */
+  .dusk-sky {
+    background: linear-gradient(
+      180deg,
+      #fbf5ec 0%,
+      #fbefdf 34%,
+      #f8dcc1 60%,
+      #f3c5a4 80%,
+      #eeb392 100%
     );
-    mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, #000 40%, transparent 100%);
+  }
+  /* Later: the rose-and-lavender that comes after the sun touches the
+     sea. Fades in as the reader scrolls down the page. */
+  .dusk-sky-late {
+    background: linear-gradient(
+      180deg,
+      #f7ece6 0%,
+      #f2dcd3 36%,
+      #ecc1b0 62%,
+      #e2a08a 84%,
+      #d68a73 100%
+    );
+    opacity: calc(var(--dusk) * 0.9);
+  }
+
+  /* The sun: a Vergina star with a soft corona, sinking toward the sea. */
+  .dusk-sun {
+    position: absolute;
+    left: var(--sun-x, 50%);
+    bottom: 3vh;
+    width: min(62vw, 380px);
+    aspect-ratio: 1;
+    color: theme("colors.saffron.DEFAULT");
+    transform: translate(-50%, calc(var(--dusk) * 20vh)) rotate(calc(var(--dusk) * 40deg));
+    opacity: calc(0.3 - var(--dusk) * 0.14);
+  }
+  .dusk-sun::before {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle,
+      rgba(246, 196, 120, 0.55) 0%,
+      rgba(240, 160, 110, 0.22) 38%,
+      transparent 68%
+    );
+  }
+  .dusk-sun svg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* The Aegean strip. Sits in front of the sun, so the sun sets into it. */
+  .dusk-sea {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 17vh;
+    background: linear-gradient(
+      180deg,
+      rgba(127, 176, 196, 0.55) 0%,
+      rgba(90, 145, 170, 0.5) 45%,
+      rgba(47, 110, 140, 0.45) 100%
+    );
+  }
+  /* Glints on the water: the running-wave pattern, drifting. */
+  .dusk-sea::before {
+    content: "";
+    position: absolute;
+    inset: 6% -48px 30% -48px;
+    background-image: var(--wave-glint);
+    background-size: 48px 24px;
+    opacity: 0.35;
+    animation: sea-drift 26s linear infinite;
+  }
+  .dusk-sea::after {
+    /* The sun's reflection, a column of light fading into the water. */
+    content: "";
+    position: absolute;
+    left: var(--sun-x, 50%);
+    top: 0;
+    width: min(30vw, 200px);
+    height: 70%;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, rgba(248, 214, 150, 0.7), transparent);
+    -webkit-mask-image: repeating-linear-gradient(180deg, #000 0 3px, transparent 3px 9px);
+    mask-image: repeating-linear-gradient(180deg, #000 0 3px, transparent 3px 9px);
+    opacity: calc(0.7 - var(--dusk) * 0.5);
+  }
+
+  /* The island village on the far shore. Drifts up slightly as you go. */
+  .dusk-village {
+    position: absolute;
+    inset: auto 0 15vh 0;
+    height: 16vh;
+    color: #e3b39c;
+    transform: translateY(calc(var(--dusk) * -2.5vh));
+  }
+  /* Olive hills in the foreground, rising as the reader "walks down". */
+  .dusk-hills {
+    position: absolute;
+    inset: auto 0 -2vh 0;
+    height: 15vh;
+    color: #c99a7e;
+    transform: translateY(calc((1 - var(--dusk)) * 5vh));
+  }
+  .dusk-village svg,
+  .dusk-hills svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Sparks off the charcoal. Faint at the top of the page, the whole
+     fire by the time you reach the footer. */
+  .dusk-embers {
+    position: absolute;
+    inset: 0;
+    opacity: calc(0.18 + var(--dusk) * 0.82);
+  }
+  .dusk-embers span {
+    position: absolute;
+    bottom: -12px;
+    left: var(--x);
+    width: var(--s, 4px);
+    height: var(--s, 4px);
+    border-radius: 9999px;
+    background: radial-gradient(circle, #ffd08a 0%, #f08a4b 45%, rgba(217, 119, 79, 0) 72%);
+    box-shadow: 0 0 10px 2px rgba(240, 138, 75, 0.35);
+    animation: ember-rise var(--d, 14s) linear var(--delay, 0s) infinite;
+    opacity: 0;
+  }
+
+  /* Film grain so the gradients read as paint, not as CSS. */
+  .dusk-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.16;
+    mix-blend-mode: multiply;
+  }
+
+  @media (max-width: 639px) {
+    .dusk-sea {
+      height: 13vh;
+    }
+    .dusk-village {
+      bottom: 11vh;
+      height: 12vh;
+    }
+    .dusk-hills {
+      height: 11vh;
+    }
+    .dusk-sun {
+      bottom: 6vh;
+    }
+  }
+
+  /* =================================================================
+     SECTION SURFACES — veils, not walls. Each is translucent so the
+     scene carries on underneath the content instead of stopping at it.
+     ================================================================= */
+  .veil-linen {
+    background-color: rgba(251, 245, 236, 0.8);
+  }
+
+  /* Clay wash with a faint linen weave, like a tablecloth in the sun. */
+  .veil-clay {
+    background-color: rgba(244, 229, 212, 0.86);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(134, 86, 15, 0.035) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(90deg, rgba(134, 86, 15, 0.03) 0 1px, transparent 1px 4px);
+  }
+
+  /* Warm sunset glow rising from below the section — the sky showing
+     through. Used where the scene should be most visible (heroes). */
+  .horizon-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .horizon-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 60% 55% at 50% 100%, rgba(240, 165, 110, 0.28), transparent 70%),
+      linear-gradient(180deg, rgba(251, 245, 236, 0.55) 0%, rgba(251, 245, 236, 0.1) 100%);
     pointer-events: none;
   }
 
-  /* On deep cobalt sections the same layer needs to lift, not darken. */
-  .scene-atmosphere-dark::before {
-    opacity: 0.16;
-    mix-blend-mode: soft-light;
+  /* Dark bands: the coals. A night-charcoal ground with a live glow from
+     below and sparks drifting up through it. */
+  .ember-glow {
+    position: relative;
+    isolation: isolate;
+    background-image:
+      radial-gradient(ellipse 70% 60% at 50% 115%, rgba(232, 120, 70, 0.5), transparent 70%),
+      radial-gradient(ellipse 40% 35% at 15% 110%, rgba(194, 137, 43, 0.35), transparent 70%),
+      radial-gradient(ellipse 40% 35% at 85% 110%, rgba(194, 137, 43, 0.3), transparent 70%);
+  }
+  .ember-glow::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      radial-gradient(circle at 12% 80%, rgba(255, 196, 120, 0.9) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 34% 60%, rgba(255, 170, 100, 0.8) 0 1px, transparent 2px),
+      radial-gradient(circle at 58% 90%, rgba(255, 196, 120, 0.85) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 76% 70%, rgba(255, 170, 100, 0.75) 0 1px, transparent 2px),
+      radial-gradient(circle at 90% 85%, rgba(255, 196, 120, 0.8) 0 1.2px, transparent 2.2px);
+    background-size: 320px 260px;
+    animation: spark-drift 18s linear infinite;
+    opacity: 0.7;
+    pointer-events: none;
   }
 
-  /* ---------- Columns as structural framing ----------
-     A plinth-and-column frame that "supports" an image or panel, echoing
-     the way the reference still-life stands objects on a marble ledge. */
-  .plinth {
+  /* =================================================================
+     TRIMS
+     ================================================================= */
+  /* Running-wave (Vitruvian scroll) — the sea, as a border. Replaces the
+     old meander key. */
+  .wave-divider,
+  .wave-divider-saffron,
+  .wave-divider-ember {
+    height: 12px;
+    background-repeat: repeat-x;
+    background-size: 24px 12px;
+  }
+  .wave-divider {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 11C6 11 7 1 14 1c5 0 7 3.5 7 6 0 2.5-2 4-4.5 4-2 0-3.5-1.4-3.5-3 0-1.4 1.2-2.4 2.6-2.4M16.5 11H24' fill='none' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
+  .wave-divider-saffron {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 11C6 11 7 1 14 1c5 0 7 3.5 7 6 0 2.5-2 4-4.5 4-2 0-3.5-1.4-3.5-3 0-1.4 1.2-2.4 2.6-2.4M16.5 11H24' fill='none' stroke='%23c2892b' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
+  .wave-divider-ember {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 11C6 11 7 1 14 1c5 0 7 3.5 7 6 0 2.5-2 4-4.5 4-2 0-3.5-1.4-3.5-3 0-1.4 1.2-2.4 2.6-2.4M16.5 11H24' fill='none' stroke='%23a43d24' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
+
+  /* Section kicker, led by a small setting sun. */
+  .eyebrow-sun {
+    @apply inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-saffron-deep;
+  }
+  .eyebrow-sun::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 35% 35%, #f4cf86, theme("colors.saffron.DEFAULT") 70%);
+    box-shadow:
+      0 0 0 3px rgba(194, 137, 43, 0.16),
+      0 0 12px 2px rgba(240, 165, 110, 0.45);
+  }
+
+  /* =================================================================
+     THE VILLAGE — frames and ledges
+     ================================================================= */
+  /* A limewashed Cycladic arch around content: two jambs and a round
+     crown, the sunset glowing through it. See components/ornament/ArchFrame. */
+  .arch-frame__opening {
+    position: absolute;
+    inset: 0 0 12px;
+    border: 2px solid color-mix(in srgb, currentColor 22%, transparent);
+    border-bottom: 0;
+    border-radius: 50% 50% 0 0 / clamp(70px, 24%, 260px) clamp(70px, 24%, 260px) 0 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 100%, rgba(246, 190, 120, 0.3), transparent 72%),
+      linear-gradient(180deg, rgba(251, 245, 236, 0.55) 0%, rgba(251, 245, 236, 0.72) 100%);
+  }
+  /* Inner reveal — the thickness of the whitewashed wall. */
+  .arch-frame__opening::before {
+    content: "";
+    position: absolute;
+    inset: 9px 9px 0;
+    border: 1px dashed color-mix(in srgb, currentColor 16%, transparent);
+    border-bottom: 0;
+    border-radius: inherit;
+  }
+  /* Keystone. */
+  .arch-frame__opening::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -7px;
+    width: 14px;
+    height: 14px;
+    transform: translateX(-50%) rotate(45deg);
+    background: theme("colors.saffron.DEFAULT");
+    border-radius: 2px;
+  }
+  /* The threshold step. */
+  .arch-frame__step {
+    position: absolute;
+    inset: auto -10px 0;
+    height: 12px;
+    border-radius: 3px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  /* Terracotta tile ledge under an image — the photos stand on a roof
+     edge in the village, instead of floating. */
+  .ledge {
     position: relative;
     padding-bottom: 1.25rem;
   }
-  .plinth::after {
+  .ledge::after {
     content: "";
     position: absolute;
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
-    width: 118%;
-    max-width: none;
-    height: 14px;
+    width: 108%;
+    height: 12px;
+    border-radius: 3px;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 16px, rgba(61, 31, 22, 0.28) 16px 17px),
+      linear-gradient(180deg, #d9774f 0%, #b24a2c 55%, #7e3320 100%);
+    box-shadow: 0 10px 20px -10px rgba(61, 31, 22, 0.55);
+  }
+
+  /* =================================================================
+     BUTTONS
+     ================================================================= */
+  /* Primary: a live coal. Terracotta-to-char with a hot core; on hover
+     it catches — the glow widens and heat shimmers across it. */
+  .btn-ember {
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-200;
+    isolation: isolate;
+    background: radial-gradient(
+      130% 150% at 30% 12%,
+      #eb9d65 0%,
+      #c9583a 36%,
+      #a43d24 66%,
+      #6d2415 100%
+    );
+    box-shadow:
+      0 1px 0 rgba(255, 220, 180, 0.45) inset,
+      0 -8px 14px -10px rgba(40, 12, 6, 0.6) inset,
+      0 10px 22px -10px rgba(164, 61, 36, 0.7);
+  }
+  .btn-ember::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background: linear-gradient(
-      180deg,
-      theme("colors.mist.DEFAULT") 0%,
-      theme("colors.mist.deep") 55%,
-      rgba(28, 56, 80, 0.16) 100%
+      100deg,
+      transparent 20%,
+      rgba(255, 214, 150, 0.45) 45%,
+      transparent 70%
     );
-    border-radius: 2px;
-    box-shadow: 0 10px 22px -12px rgba(28, 56, 80, 0.45);
+    transform: translateX(-120%);
+    transition: transform 0.6s ease;
   }
-
-  /* ---------- Orb buttons ----------
-     The marble spheres from the still-life, reimagined as a pill/orb
-     control. Soft top-left light source, matching the reference lighting. */
-  .btn-orb {
-    @apply relative inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-200;
-    background: radial-gradient(
-      120% 120% at 32% 22%,
-      #ffffff 0%,
-      #f4f7f8 38%,
-      #dfe8ec 72%,
-      #c4d2da 100%
-    );
-    color: theme("colors.cobalt.dark");
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.9) inset,
-      0 -8px 14px -10px rgba(28, 56, 80, 0.35) inset,
-      0 10px 20px -10px rgba(28, 56, 80, 0.45);
-  }
-  .btn-orb:hover {
+  .btn-ember:hover {
     transform: translateY(-1px);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.95) inset,
-      0 -8px 14px -10px rgba(28, 56, 80, 0.3) inset,
-      0 14px 26px -10px rgba(28, 56, 80, 0.5);
+      0 1px 0 rgba(255, 220, 180, 0.5) inset,
+      0 -8px 14px -10px rgba(40, 12, 6, 0.55) inset,
+      0 0 0 4px rgba(232, 187, 102, 0.22),
+      0 14px 30px -10px rgba(217, 119, 79, 0.85);
   }
-  .btn-orb:active {
+  .btn-ember:hover::after {
+    transform: translateX(120%);
+  }
+  .btn-ember:active {
     transform: translateY(0);
   }
 
-  /* Filled/brand variant of the orb, for the primary action. */
-  .btn-orb-blue {
-    @apply relative inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-200;
-    background: radial-gradient(
-      120% 120% at 32% 22%,
-      #6d93b4 0%,
-      #3d668e 42%,
-      #2f5578 72%,
-      #1c3850 100%
-    );
+  /* Secondary: a limewashed wall with a terracotta edge. */
+  .btn-limewash {
+    @apply relative inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide transition-all duration-200;
+    color: theme("colors.ember.dark");
+    background: linear-gradient(180deg, #fffdf9 0%, #fbf3e7 60%, #f2e2cd 100%);
+    border: 1px solid rgba(164, 61, 36, 0.28);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.28) inset,
-      0 -8px 14px -10px rgba(10, 22, 34, 0.55) inset,
-      0 10px 22px -10px rgba(28, 56, 80, 0.6);
+      0 1px 0 #fff inset,
+      0 8px 18px -12px rgba(61, 31, 22, 0.5);
   }
-  .btn-orb-blue:hover {
+  .btn-limewash:hover {
     transform: translateY(-1px);
+    border-color: theme("colors.ember.DEFAULT");
+    color: theme("colors.ember.DEFAULT");
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.34) inset,
-      0 -8px 14px -10px rgba(10, 22, 34, 0.5) inset,
-      0 14px 28px -10px rgba(28, 56, 80, 0.65);
+      0 1px 0 #fff inset,
+      0 0 0 4px rgba(232, 187, 102, 0.2),
+      0 12px 22px -12px rgba(61, 31, 22, 0.55);
   }
-  .btn-orb-blue:active {
+  .btn-limewash:active {
     transform: translateY(0);
   }
 
-  /* ---------- Carved panel ----------
-     Bas-relief card treatment: light top edge, soft inset shadow, as if
-     recessed into the marble. Used for menu categories and review cards. */
-  .carved-panel {
-    @apply rounded-sm border border-white/70 bg-white/70 backdrop-blur-sm;
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.9) inset,
-      0 1px 2px rgba(28, 56, 80, 0.06),
-      0 12px 28px -18px rgba(28, 56, 80, 0.35);
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-ember px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-ember-light;
   }
 
-  /* ---------- Order builder: option chips ----------
-     Tappable pill for size / meat / flavour choices. Large enough for a
-     thumb on mobile; selected state is a filled cobalt pill. */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors hover:border-saffron-light hover:bg-white/10;
+  }
+
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center rounded-full border border-ember/40 px-6 py-3 text-sm font-semibold tracking-wide text-ember transition-colors hover:border-ember hover:bg-ember/5;
+  }
+
+  /* =================================================================
+     CARDS & CONTROLS
+     ================================================================= */
+  /* Linen card: a folded tablecloth corner — warm paper, a stitched hem
+     just inside the edge, lit from the sunset side. */
+  .linen-card {
+    @apply relative rounded-lg border border-saffron/25;
+    background-color: rgba(255, 251, 245, 0.88);
+    background-image: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(246, 200, 150, 0.12) 100%
+    );
+    backdrop-filter: blur(4px);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.9) inset,
+      0 1px 2px rgba(61, 31, 22, 0.06),
+      0 16px 30px -20px rgba(122, 52, 30, 0.45);
+  }
+  .linen-card::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 1px dashed rgba(194, 137, 43, 0.28);
+    border-radius: 0.4rem;
+    pointer-events: none;
+  }
+
+  /* Order builder: option chips — sun-baked clay tiles. Selected state
+     fires up to an ember. */
   .chip-option {
-    @apply inline-flex items-center rounded-full border border-ink/20 bg-white px-4 py-2.5 text-sm font-medium text-ink/80 transition-all duration-150;
+    @apply inline-flex items-center rounded-full border border-ember/20 bg-linen px-4 py-2.5 text-sm font-medium text-ink/80 transition-all duration-150;
   }
   .chip-option:hover {
-    @apply border-cobalt/50 text-cobalt-dark;
+    @apply border-ember/50 bg-clay text-ember-dark;
   }
   .chip-option:active {
     transform: scale(0.96);
   }
   .chip-option--on {
-    @apply border-cobalt bg-cobalt text-white;
-    box-shadow: 0 6px 14px -8px rgba(28, 56, 80, 0.6);
+    @apply border-ember text-white;
+    background: radial-gradient(120% 150% at 30% 15%, #d9774f 0%, #a43d24 60%, #7e3320 100%);
+    box-shadow:
+      0 0 0 3px rgba(232, 187, 102, 0.22),
+      0 6px 14px -8px rgba(164, 61, 36, 0.7);
   }
   .chip-option--on:hover {
     @apply text-white;
@@ -263,10 +560,10 @@
 
   /* Quantity stepper buttons in the customiser. */
   .qty-btn {
-    @apply flex h-11 w-11 items-center justify-center rounded-full border border-ink/20 bg-white text-xl font-medium text-cobalt-dark transition-all duration-150;
+    @apply flex h-11 w-11 items-center justify-center rounded-full border border-ember/20 bg-linen text-xl font-medium text-ember-dark transition-all duration-150;
   }
   .qty-btn:hover:not(:disabled) {
-    @apply border-cobalt text-cobalt;
+    @apply border-ember bg-clay text-ember;
   }
   .qty-btn:active:not(:disabled) {
     transform: scale(0.92);
@@ -292,37 +589,138 @@
     animation: cart-bump 0.4s cubic-bezier(0.2, 0.9, 0.25, 1);
   }
 
-  /* ---------- Themed dropdown / mobile menu ----------
-     Marble panel with a meander top trim, instead of a flat colour block. */
+  /* =================================================================
+     HEADER, DROPDOWN, NAV
+     ================================================================= */
+  /* Header: a pane of evening sky with the horizon drawn under it. */
+  .header-glass {
+    background-color: rgba(251, 245, 236, 0.8);
+    backdrop-filter: blur(12px) saturate(1.2);
+  }
+  .header-glass::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -1px 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      rgba(47, 110, 140, 0) 0%,
+      rgba(47, 110, 140, 0.45) 18%,
+      rgba(194, 137, 43, 0.75) 50%,
+      rgba(164, 61, 36, 0.55) 82%,
+      rgba(164, 61, 36, 0) 100%
+    );
+  }
+
+  /* Dropdown panels: the same evening glass. */
   .menu-panel {
-    background-color: rgba(250, 248, 244, 0.97);
-    background-image: url("/images/texture-marble.jpg");
-    background-size: 560px auto;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 24px 40px -24px rgba(28, 56, 80, 0.55);
+    background-color: rgba(251, 245, 236, 0.95);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(248, 220, 193, 0.35));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 24px 40px -24px rgba(122, 52, 30, 0.5);
+  }
+  /* The full mobile menu gets the whole view: sky fading to sunset, the
+     sea and the olive hills along its bottom edge. You open the menu and
+     look out over the island. */
+  .menu-panel--scene {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 70' preserveAspectRatio='none'%3E%3Crect y='36' width='400' height='34' fill='%237fb0c4' fill-opacity='.35'/%3E%3Cpath d='M0 40 Q40 22 80 30 T160 26 Q200 14 240 28 T320 24 Q360 18 400 30 V70 H0Z' fill='%23e3b39c' fill-opacity='.55'/%3E%3Cpath d='M0 56 Q60 38 120 50 T240 48 Q300 36 400 50 V70 H0Z' fill='%23c99a7e' fill-opacity='.6'/%3E%3C/svg%3E"),
+      linear-gradient(180deg, rgba(251, 245, 236, 0.97) 0%, rgba(250, 234, 214, 0.97) 60%, rgba(245, 208, 176, 0.97) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 70px, 100% 100%;
+    background-position: bottom, top;
+    padding-bottom: 60px;
   }
 
   .menu-panel-link {
-    @apply flex items-center justify-between border-b border-cobalt/10 py-3.5 text-base font-medium text-cobalt-dark transition-colors;
+    @apply flex items-center justify-between border-b border-ember/10 px-2 py-3.5 text-base font-medium text-ember-dark transition-all;
   }
   .menu-panel-link:hover {
-    @apply text-cobalt;
+    @apply text-ember;
+    background: linear-gradient(90deg, rgba(232, 187, 102, 0.22), transparent 70%);
+  }
+
+  /* Mobile quick-actions pill. */
+  .quick-dock {
+    background-color: rgba(251, 245, 236, 0.92);
+    border: 1px solid rgba(194, 137, 43, 0.3);
+    box-shadow:
+      0 1px 0 #fff inset,
+      0 10px 28px -10px rgba(122, 52, 30, 0.55);
+    backdrop-filter: blur(12px);
+  }
+
+  /* =================================================================
+     FOOTER — nightfall. The skyline goes dark and the coals take over.
+     ================================================================= */
+  .footer-night {
+    position: relative;
+    isolation: isolate;
+    background-color: theme("colors.char.DEFAULT");
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% 100%, rgba(164, 61, 36, 0.4), transparent 70%),
+      linear-gradient(180deg, #2b1c17 0%, #1f1511 60%);
+  }
+  /* The village and hills in silhouette, black against the last light. */
+  .footer-skyline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 56px;
+    color: theme("colors.char.DEFAULT");
+    pointer-events: none;
+  }
+  .footer-skyline svg {
+    width: 100%;
+    height: 100%;
   }
 
   .container-page {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
+}
 
-  .btn-primary {
-    @apply inline-flex items-center justify-center rounded-sm bg-cobalt px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-cobalt-light;
+/* ---------- Scene animations ---------- */
+:root {
+  --wave-glint: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cpath d='M4 8h10M28 18h12M20 4h6' stroke='%23fff6e6' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+@keyframes sea-drift {
+  from {
+    transform: translateX(0);
   }
-
-  .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-sm border border-white/40 px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors hover:border-white hover:bg-white/10;
+  to {
+    transform: translateX(48px);
   }
+}
 
-  .btn-outline-dark {
-    @apply inline-flex items-center justify-center rounded-sm border border-cobalt/40 px-6 py-3 text-sm font-semibold tracking-wide text-cobalt transition-colors hover:border-cobalt hover:bg-cobalt/5;
+@keyframes ember-rise {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(var(--sway, 18px), -45vh) scale(0.85);
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(calc(var(--sway, 18px) * -0.6), -90vh) scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes spark-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px -260px;
   }
 }
 
@@ -373,15 +771,24 @@
   }
 }
 
-/* Respect reduced-motion preferences: keep the state changes, drop the movement. */
+/* Respect reduced-motion preferences: keep the state changes, drop the
+   movement. The scene stays, but stills — no sparks, no drifting water. */
 @media (prefers-reduced-motion: reduce) {
   .customiser-sheet,
   .added-flash,
-  .cart-bump {
+  .cart-bump,
+  .dusk-sea::before,
+  .ember-glow::after {
     animation: none;
+  }
+  .dusk-embers {
+    display: none;
   }
   .chip-option:active,
   .qty-btn:active:not(:disabled) {
     transform: none;
+  }
+  .btn-ember::after {
+    display: none;
   }
 }

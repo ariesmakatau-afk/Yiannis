@@ -14,7 +14,7 @@ export default function OrderStatusPage({ params }: { params: { id: string } }) 
     <div className="container-page max-w-lg py-12 sm:py-16">
       <OrderStatus id={params.id} />
       <div className="mt-10 text-center">
-        <Link href="/menu" className="text-sm font-medium text-cobalt underline underline-offset-4">
+        <Link href="/menu" className="text-sm font-medium text-ember underline underline-offset-4">
           Back to the menu
         </Link>
       </div>

@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="container-page max-w-prose py-10 sm:py-14">
-      <h1 className="font-display text-3xl font-semibold text-cobalt-dark sm:text-4xl">
+      <h1 className="font-display text-3xl font-semibold text-ember-dark sm:text-4xl">
         Privacy Policy
       </h1>
-      <div className="meander-divider-brass mt-4 w-24 opacity-80" aria-hidden="true" />
+      <div className="wave-divider-saffron mt-4 w-24 opacity-80" aria-hidden="true" />
 
       <div className="mt-8 space-y-8 text-ink/75">
         <p>
@@ -21,7 +21,7 @@ export default function PrivacyPage() {
         </p>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Information we collect
           </h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
             <li>
               <strong>Contact details you send us.</strong> If you call, email, or message the
               shop (including via the phone number or email address on our{" "}
-              <a href="/contact" className="text-cobalt underline underline-offset-4">
+              <a href="/contact" className="text-ember underline underline-offset-4">
                 Contact
               </a>{" "}
               page), we&rsquo;ll have whatever information you choose to share with us in that
@@ -52,7 +52,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             How we use it
           </h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Who we share it with
           </h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -92,7 +92,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Cookies
           </h2>
           <p className="mt-3">
@@ -103,7 +103,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl font-semibold text-cobalt-dark">
+          <h2 className="font-display text-xl font-semibold text-ember-dark">
             Your rights &amp; contact
           </h2>
           <p className="mt-3">
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
           <ul className="mt-3 space-y-1">
             <li>
               Email:{" "}
-              <a href={`mailto:${business.email}`} className="text-cobalt underline underline-offset-4">
+              <a href={`mailto:${business.email}`} className="text-ember underline underline-offset-4">
                 {business.email}
               </a>
             </li>

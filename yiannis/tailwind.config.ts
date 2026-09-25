@@ -8,28 +8,50 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // "Hindley Dusk" — the palette of the backdrop scene: an Aegean
+      // sunset that sinks as you scroll, down to the charcoal the meat is
+      // cooked over. Every token is named for where it comes from in that
+      // scene, so a component reads its role from its colour.
       colors: {
-        ink: "#20242c", // body text — warm near-black, not literal black
-        cobalt: {
-          DEFAULT: "#2f5578", // softened harbor blue — was #0d3b6f, still reads as "the blue"
-          light: "#6d93b4", // hover states, lighter accents
-          dark: "#1c3850", // deep overlay tone, gradients — was #082746
+        ink: "#2a1b15", // body text — charred walnut, not literal black
+        // Terracotta ember: the glow of the coals and the roof tiles of the
+        // island village. The brand colour — buttons, links, prices.
+        ember: {
+          DEFAULT: "#a43d24",
+          light: "#d9774f", // hover states, the glow at the heart of a coal
+          dark: "#3d1f16", // headings, deep bands — spent charcoal
         },
-        mist: {
-          DEFAULT: "#eef3f5", // pale cool blue-grey — the "marble" tint, alternating sections
-          deep: "#dce6ea",
+        // Sun-baked clay wash — alternating sections, chips, soft fills.
+        clay: {
+          DEFAULT: "#f4e5d4",
+          deep: "#ead2b9",
         },
-        sand: {
-          DEFAULT: "#faf8f4", // warm off-white body background, replaces stark white
+        // Limewashed linen — the base page, the tablecloth under everything.
+        linen: {
+          DEFAULT: "#fbf5ec",
         },
-        // Antique brass, taken from the Spartan helmets on the shopfront
-        // sign. The palette was blue-and-white only, which left nothing to
-        // accent with — every highlight had to be the same cobalt, which is
-        // why the old pages felt flat and repetitive.
-        brass: {
-          DEFAULT: "#a8873f",
-          light: "#c9a961",
-          deep: "#7d6329",
+        // Saffron / olive-oil gold — the accent: eyebrows, stars, trims.
+        saffron: {
+          DEFAULT: "#c2892b",
+          light: "#e8bb66",
+          deep: "#86560f",
+        },
+        // Olive grove — the hills in the backdrop; used sparingly for
+        // confirmations and natural accents.
+        olive: {
+          DEFAULT: "#5f6b3a",
+          light: "#9aa56a",
+          dark: "#343b1d",
+        },
+        // The Aegean — the strip of sea at the horizon.
+        aegean: {
+          DEFAULT: "#2f6e8c",
+          light: "#7fb0c4",
+        },
+        // Night over the spit — footer and the darkest bands.
+        char: {
+          DEFAULT: "#1f1511",
+          light: "#33231c",
         },
       },
       fontFamily: {
@@ -41,7 +63,7 @@ const config: Config = {
         prose: "68ch",
       },
       boxShadow: {
-        card: "0 1px 0 0 rgba(15,23,32,0.06)",
+        card: "0 1px 0 0 rgba(61,31,22,0.06)",
       },
     },
   },

@@ -46,13 +46,13 @@ export default function OrderStatus({ id }: { id: string }) {
 
   if (error || !order) {
     return (
-      <div className="carved-panel p-8 text-center">
-        <p className="font-display text-xl font-semibold text-cobalt-dark">
+      <div className="linen-card p-8 text-center">
+        <p className="font-display text-xl font-semibold text-ember-dark">
           We couldn&rsquo;t find that order
         </p>
         <p className="mt-2 text-sm text-ink/60">
           Check the link, or give us a call on{" "}
-          <a href={business.phoneHref} className="font-semibold text-cobalt">
+          <a href={business.phoneHref} className="font-semibold text-ember">
             {business.phone}
           </a>
           .
@@ -64,19 +64,19 @@ export default function OrderStatus({ id }: { id: string }) {
   const { headline, detail, tone } = describe(order);
 
   return (
-    <div className="carved-panel p-7 text-center sm:p-9">
-      <p className="eyebrow-brass justify-center">Your order</p>
+    <div className="linen-card p-7 text-center sm:p-9">
+      <p className="eyebrow-sun justify-center">Your order</p>
 
       <p
         className={`mt-5 font-display text-3xl font-semibold leading-tight sm:text-4xl ${
-          tone === "bad" ? "text-red-700" : "text-cobalt-dark"
+          tone === "bad" ? "text-red-700" : "text-ember-dark"
         }`}
       >
         {headline}
       </p>
       <p className="mt-3 leading-relaxed text-ink/65">{detail}</p>
 
-      <dl className="mt-7 space-y-2 border-t border-cobalt/10 pt-5 text-left text-sm">
+      <dl className="mt-7 space-y-2 border-t border-ember/10 pt-5 text-left text-sm">
         <div className="flex justify-between gap-4">
           <dt className="text-ink/50">Name</dt>
           <dd className="font-semibold">{order.customer_name}</dd>
@@ -91,7 +91,7 @@ export default function OrderStatus({ id }: { id: string }) {
         This page updates on its own — leave it open.
       </p>
 
-      <a href={business.phoneHref} className="btn-orb mt-6 w-full">
+      <a href={business.phoneHref} className="btn-limewash mt-6 w-full">
         Call the shop
       </a>
     </div>

@@ -129,11 +129,11 @@ export default function KitchenBoard() {
   const done = orders.filter((o) => o.status === "collected" || o.status === "rejected");
 
   return (
-    <div className="min-h-screen bg-mist">
-      <header className="sticky top-0 z-10 border-b border-cobalt/15 bg-white/95 backdrop-blur">
+    <div className="min-h-screen bg-clay">
+      <header className="sticky top-0 z-10 border-b border-ember/15 bg-white/95 backdrop-blur">
         <div className="container-page flex items-center justify-between gap-4 py-3.5">
           <div>
-            <p className="font-display text-lg font-semibold text-cobalt-dark">Kitchen</p>
+            <p className="font-display text-lg font-semibold text-ember-dark">Kitchen</p>
             <p className="text-xs text-ink/50">
               {active.length} active · refreshes every 15s
             </p>
@@ -161,7 +161,7 @@ export default function KitchenBoard() {
       </header>
 
       {showSounds && (
-        <div className="border-b border-cobalt/15 bg-white">
+        <div className="border-b border-ember/15 bg-white">
           <div className="container-page py-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">
               Alert sound — tap to hear it
@@ -174,8 +174,8 @@ export default function KitchenBoard() {
                   onClick={() => chooseSound(opt.id)}
                   className={`rounded-sm border px-3.5 py-2 text-left transition-colors ${
                     sound === opt.id
-                      ? "border-cobalt bg-cobalt text-white"
-                      : "border-ink/20 hover:border-cobalt"
+                      ? "border-ember bg-ember text-white"
+                      : "border-ink/20 hover:border-ember"
                   }`}
                 >
                   <span className="block text-sm font-semibold">{opt.label}</span>
@@ -207,8 +207,8 @@ export default function KitchenBoard() {
         {loading ? (
           <p className="py-16 text-center text-ink/50">Loading…</p>
         ) : active.length === 0 ? (
-          <div className="carved-panel px-6 py-16 text-center">
-            <p className="font-display text-xl font-semibold text-cobalt-dark">
+          <div className="linen-card px-6 py-16 text-center">
+            <p className="font-display text-xl font-semibold text-ember-dark">
               No orders waiting
             </p>
             <p className="mt-2 text-sm text-ink/55">New ones appear here automatically.</p>
@@ -264,21 +264,21 @@ function OrderCard({
   return (
     <article
       className={`rounded-sm border bg-white p-5 ${
-        isNew ? "border-cobalt ring-2 ring-cobalt/20" : "border-cobalt/15"
+        isNew ? "border-ember ring-2 ring-ember/20" : "border-ember/15"
       }`}
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="font-display text-lg font-semibold text-cobalt-dark">
+          <p className="font-display text-lg font-semibold text-ember-dark">
             {order.customer_name}
           </p>
-          <a href={`tel:${order.phone}`} className="text-sm font-medium text-cobalt">
+          <a href={`tel:${order.phone}`} className="text-sm font-medium text-ember">
             {order.phone}
           </a>
         </div>
         <div className="text-right">
           {isNew ? (
-            <span className="rounded-full bg-cobalt px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white">
+            <span className="rounded-full bg-ember px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white">
               New
             </span>
           ) : (
@@ -294,13 +294,13 @@ function OrderCard({
         <span className="text-ink/50">Pickup:</span>{" "}
         <span className="font-semibold">{order.pickup_time}</span>
         {order.wait_minutes != null && (
-          <span className="ml-2 rounded bg-brass/15 px-2 py-0.5 text-xs font-semibold text-brass-deep">
+          <span className="ml-2 rounded bg-saffron/15 px-2 py-0.5 text-xs font-semibold text-saffron-deep">
             told {order.wait_minutes} min
           </span>
         )}
       </p>
 
-      <ul className="mt-4 space-y-2 border-t border-cobalt/10 pt-3">
+      <ul className="mt-4 space-y-2 border-t border-ember/10 pt-3">
         {order.items.map((item, i) => (
           <li key={i} className="text-sm">
             <span className="font-semibold">{item.quantity}×</span> {item.name}
@@ -323,7 +323,7 @@ function OrderCard({
                 key={mins}
                 type="button"
                 onClick={() => onPatch(order.id, { status: "accepted", waitMinutes: mins })}
-                className="rounded-full border border-cobalt/30 px-3 py-1.5 text-xs font-semibold text-cobalt-dark transition-colors hover:border-cobalt hover:bg-cobalt/5 active:scale-95"
+                className="rounded-full border border-ember/30 px-3 py-1.5 text-xs font-semibold text-ember-dark transition-colors hover:border-ember hover:bg-ember/5 active:scale-95"
               >
                 {mins} min
               </button>
@@ -333,7 +333,7 @@ function OrderCard({
             <button
               type="button"
               onClick={() => onPatch(order.id, { status: "accepted" })}
-              className="flex-1 rounded-sm bg-cobalt py-2.5 text-sm font-semibold text-white transition-transform active:scale-[0.98]"
+              className="flex-1 rounded-sm bg-ember py-2.5 text-sm font-semibold text-white transition-transform active:scale-[0.98]"
             >
               Accept
             </button>

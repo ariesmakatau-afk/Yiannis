@@ -61,10 +61,10 @@ export default function PhotoManager({
   }
 
   return (
-    <div className="min-h-screen bg-mist">
-      <header className="border-b border-cobalt/15 bg-white">
+    <div className="min-h-screen bg-clay">
+      <header className="border-b border-ember/15 bg-white">
         <div className="container-page flex items-center justify-between gap-4 py-3.5">
-          <p className="font-display text-lg font-semibold text-cobalt-dark">Admin</p>
+          <p className="font-display text-lg font-semibold text-ember-dark">Admin</p>
           <div className="flex items-center gap-2">
             <Link href="/kitchen" className="rounded-full border border-ink/20 px-3 py-1.5 text-xs font-semibold">
               Kitchen
@@ -81,15 +81,15 @@ export default function PhotoManager({
       </header>
 
       <main className="container-page max-w-xl py-8">
-        <p className="eyebrow-brass">Parea Mas</p>
-        <h1 className="mt-3 font-display text-2xl font-semibold text-cobalt-dark">
+        <p className="eyebrow-sun">Parea Mas</p>
+        <h1 className="mt-3 font-display text-2xl font-semibold text-ember-dark">
           Team photo
         </h1>
         <p className="mt-2 text-sm leading-relaxed text-ink/60">
           Uploading a new one replaces the old immediately. Only one is ever kept.
         </p>
 
-        <div className="carved-panel mt-6 p-5">
+        <div className="linen-card mt-6 p-5">
           {url ? (
             <>
               {/* Plain <img>: the URL is external and changes at runtime, so
@@ -139,7 +139,7 @@ export default function PhotoManager({
             type="button"
             disabled={busy}
             onClick={() => inputRef.current?.click()}
-            className="btn-orb-blue disabled:opacity-60"
+            className="btn-ember disabled:opacity-60"
           >
             {busy ? "Uploading…" : url ? "Replace photo" : "Choose photo"}
           </button>
